@@ -43,8 +43,7 @@ app.get("/favorites", function(req,res){
 
 app.get("/", function(req, res) {
 
-
-    res.render("main/index")
+res.render("main/index")
 
 // ELLE'S ZILLOW NOTES!
 //   var params = {
@@ -96,7 +95,7 @@ app.get("/", function(req, res) {
 
 app.get("/:id/results", function(req, res){
   // TODO: ENTER CODE HERE
-  res.render('main/results')
+  res.render('shared/results')
 });
 
 

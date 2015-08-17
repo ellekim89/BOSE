@@ -133,10 +133,11 @@ var zpid = zillow.callApi('GetSearchResults', params)
 //});
 
 
-// app.get("/:id/results", function(req, res){
-//   // TODO: ENTER CODE HERE
-//   res.render('shared/results')
-// });
+
+app.get("/:id/results", function(req, res){
+  // TODO: ENTER CODE HERE
+  res.render('main/results')
+});
 
 
 

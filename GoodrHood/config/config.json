@@ -1,6 +1,6 @@
 {
   "development": {
-    "database": "bose_dev",
+    "database": "bose",
     "host": "127.0.0.1",
     "dialect": "postgresql"
   },

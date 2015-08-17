@@ -95,7 +95,7 @@ res.render("main/index")
 
 app.get("/:id/results", function(req, res){
   // TODO: ENTER CODE HERE
-  res.render('shared/results')
+  res.render('main/results')
 });
 
 

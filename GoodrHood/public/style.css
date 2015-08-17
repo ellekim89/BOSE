@@ -1,4 +1,5 @@
 
+/* Begin video CSS */
 .fullscreen-bg {
   position: fixed;
   top: 0;
@@ -7,6 +8,7 @@
   left: 0;
   overflow: hidden;
   z-index: -100;
+  opacity: 0.5;
 }
 
 .fullscreen-bg__video {
@@ -40,3 +42,62 @@
     display: none;
   }
 }
+/* End video CSS */
+
+
+/* Begin map CSS */
+#ws-walkscore-tile{
+  position:relative;
+  text-align:center;
+  color: black;
+}
+
+#ws-walkscore-tile *{
+  /*float:center;*/
+
+}
+
+.hider-header{
+  position: absolute;
+  background-color: white;
+  width: 100%;
+  height: 3.3%;
+}
+
+.hider-ad-bar{
+  margin-top: 80%;
+  position: absolute;
+  background-color: white;
+  width: 100%;
+  height: 5.3%;
+}
+
+#ws-foottext, #ws-footer a,#ws-footer a:link{
+/*  font:11px/14px Verdana,Arial,Helvetica,sans-serif;
+  margin-right:6px;
+  white-space:nowrap;
+  padding:0;color:#000;
+  font-weight:bold;text-decoration:none*/
+}
+
+#ws-walkscore-tile > iframe{
+  text-align: center;
+}
+
+#ws-footer a:hover{
+    color:#000;
+    text-decoration:none
+}
+#ws-footer a:active{
+    color:#b14900
+}
+/*.map{
+  background-color: white;
+  width: 800px;
+  height: 980px;
+}*/
+
+.centerize{
+  margin:
+}
+/* End map CSS */

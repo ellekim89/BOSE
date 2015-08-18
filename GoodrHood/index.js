@@ -1,5 +1,12 @@
 var express = require('express');
 var db = require('./models');
+var async = require('async');
+var yelp = require("yelp").createClient({
+  consumer_key: process.env.YELP_CONSUMER_KEY,
+  consumer_secret: process.env.YELP_CONSUMER_SECRET,
+  token: process.env.YELP_TOKEN,
+  token_secret: process.env.YELP_TOKEN_SECRET
+});
 var bodyParser = require('body-parser');
 var request = require('request');
 var methodOverride = require('method-override');
@@ -131,39 +138,93 @@ app.get("/", function(req, res){
 
 })
 
-app.post("/", function(req, res) {
-
-var params = {
-  address: req.body.address,
-  citystatezip: "Seattle, WA " + req.body.zip_code
-  // city: 'Seattle',
-  // state: 'WA',
-  // zip: '98107'
-};
-
-
-zillow.callApi('GetSearchResults', params)
-  .then(function(result){
-
-    var id = result.response[0].results[0].result[0].zpid[0]
-    var parameters = {
-      zpid: parseInt(id)
-    };
-    //var zpid = parseInt(id)
-  zillow.callApi('GetUpdatedPropertyDetails', parameters)
-      .then(function(data) {
-        var results = data.response
-
-        //var zpid = data.response.zpid[0]
-        //var latitude = data.response.address[0].latitude[0]
-        //var longitude = data.response.address[0].longitude[0]
-        // console.log(results)
-
-        res.render("main/index", {results: results})
+app.get("/search", function(req, res) {
+  async.waterfall([
+    function(callback){
+      var params = {
+        address: req.query.address,
+        citystatezip: "Seattle, WA " + req.query.zip_code
+      };
+      var zillowAddressCall = zillow.callApi('GetSearchResults', params);
+      zillowAddressCall.then(function(data){
+        var zpid = parseInt(data.response[0].results[0].result[0].zpid[0])
+        var id = {zpid: zpid}
+        var zillowIdCall = zillow.callApi('GetUpdatedPropertyDetails', id)
+        zillowIdCall.then(function(result){
+          var zillowResult = result.response[0];
+          var zillowObj = {
+            address: zillowResult.address[0].street+" "+zillowResult.address[0].city+" "+zillowResult.address[0].state,
+            images: zillowResult.images[0].image[0],
+            lat: zillowResult.address[0].latitude[0],
+            lon: zillowResult.address[0].longitude[0]
+          }
+          // console.log(zillowObj)
+          callback(null, zillowObj)
+        })
       })
-    });
-
-
+    },
+    function(zillowObj, callback){
+      yelp.search({term: "food", location: req.query.zip_code}, function(error, data) {
+        var foodArr = [];
+        var score = 0;
+        // res.send(data)
+        data.businesses.forEach(function(place){
+          foodArr.push(place.rating);
+        })
+        for (var i = 0; i < foodArr.length; i++) {
+          score = foodArr[i]+score;
+        };
+        score = score / foodArr.length;
+        var foodScore = Math.round(score*50);
+        yelp.search({term: "entertainment", location: req.query.zip_code}, function(error, data) {
+          var ratingsArr = [];
+          var score = 0;
+          data.businesses.forEach(function(place){
+            ratingsArr.push(place.rating);
+          })
+          for (var i = 0; i < ratingsArr.length; i++) {
+            score = ratingsArr[i]+score;
+          };
+          score = score / ratingsArr.length;
+          entertainmentScore = Math.round(score*50);
+            var yelpZillowObj = {
+              zillow:zillowObj,
+              yelpFoodScore:foodScore,
+              yelpEntertainmentScore: entertainmentScore
+            }
+          // res.send(yelpZillowObj)
+          callback(null, yelpZillowObj);
+        })
+      })
+    },
+    function(yelpZillowObj, callback){
+      // res.send(parseInt(yelpZillowObj.zillow.lat))
+      instagram.location_search({ lat: parseFloat(yelpZillowObj.zillow.lat), lng: parseFloat(yelpZillowObj.zillow.lon) }, function(err, result) {
+        // res.send(result)
+        if (err) {
+          res.send(err+"no sam");
+        } else {
+            var id = result[2].id;
+            instagram.location_media_recent(id, function(err, result){
+              if (err) {
+                res.send(err+"no sam");
+              } else {
+                var finalObj = {
+                  info:yelpZillowObj,
+                  images:result,
+                }
+                // res.send(finalObj)
+                console.log(result);
+                callback(null, finalObj)
+              }
+            });
+        }
+  })
+    }
+  ], function(err,results){
+    //res.send(results)
+    res.render('main/results', {info:results})
+  })
 });
 
 

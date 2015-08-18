@@ -4,12 +4,15 @@
   </div>
 
   <div class="side-bar col-md-8"><h1>Results</h1>
-  <!-- Enter magic tags for results -->
+  <% info.images.forEach(function(image){ %>
+<img src="<%= image.images.low_resolution.url  %>">
+<% }) %>
 
     <div class="section overview col-md-12">
 
       <div class="score">
-        <h2> Score: 720 </h2>
+        <h2> Score:
+        <%= info.info.yelpFoodScore + info.info.yelpEntertainmentScore %> </h2>
         <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
           tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
           quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo

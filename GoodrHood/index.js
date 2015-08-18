@@ -46,14 +46,12 @@ app.get("/favorites", function(req,res){
 app.get("/", function(req, res) {
 
 var params = {
-  address: "106 NW 42nd St",
-  citystatezip: "Seattle, WA 98107"
+  address: req.body.address,
+  citystatezip: "Seattle, WA " + req.body.zip_code
   // city: 'Seattle',
   // state: 'WA',
   // zip: '98107'
 };
-
-// var zip = req.body.zip_code
 
 
 var zpid = zillow.callApi('GetSearchResults', params)
@@ -67,22 +65,16 @@ var zpid = zillow.callApi('GetSearchResults', params)
   zillow.callApi('GetUpdatedPropertyDetails', parameters)
       .then(function(data) {
         var results = data.response
-        console.log(results)
+
+        //var zpid = data.response.zpid[0]
+        //var latitude = data.response.address[0].latitude[0]
+        //var longitude = data.response.address[0].longitude[0]
+        // console.log(results)
+        res.render("main/index", {results: results})
       })
     });
 
-// zillow.getDemographics({zip: '98107'})
-//   .then(function(data) {
-//     //LATITUDE
-//     //var results = data.response[0].region[0].latitude[0]
-//     //LONGITUDE
-//     //var results = data.response[0].region[0].longitude[0]
 
-
-//     console.log(results);
-//   })
-
-res.render('main/index')
 });
 
 

@@ -23,25 +23,25 @@ app.use(session({
 }));
 app.use(flash());
 
-// app.get("/signup", function(req,res){
-//   // TODO: ENTER CODE HERE
-//   res.render('main/signup');
-// });
+app.get("/signup", function(req,res){
+  // TODO: ENTER CODE HERE
+  res.render('main/signup');
+});
 
-// app.post("/signup", function(req, res){
-//     // TODO: ENTER CODE HERE
-// })
-// app.get("/login", function(req,res){
-//     // TODO: ENTER CODE HERE
-//     res.render('main/login');
-// });
+app.post("/signup", function(req, res){
+    // TODO: ENTER CODE HERE
+})
+app.get("/login", function(req,res){
+    // TODO: ENTER CODE HERE
+    res.render('main/login');
+});
 
-// app.get("/favorites", function(req,res){
-//     // TODO: ENTER CODE HERE
-//     res.render('main/favorites');
-// })
+app.get("/favorites", function(req,res){
+    // TODO: ENTER CODE HERE
+    res.render('main/favorites');
+})
 
-//app.get("/", function(req, res) {
+app.get("/", function(req, res) {
 
 var params = {
   address: "106 NW 42nd St",
@@ -59,70 +59,70 @@ var zpid = zillow.callApi('GetSearchResults', params)
     var parameters = {
   zpid: parseInt(id)
 };
-    //var zpid = parseInt(id)
+    var zpid = parseInt(id)
       zillow.callApi('GetUpdatedPropertyDetails', parameters)
         .then(function(data) {
           var results = data.response
         console.log(results)
       })
 
-    //console.log(id)
+    console.log(id)
     })
 
-  // zillow.callApi('GetUpdatedPropertyDetails', zpid)
-  //   .then(function(data) {
-  //     //var results = data.response[0].results[0].result[0]
-  //    console.log(data.response[0])
-  //   })
+  zillow.callApi('GetUpdatedPropertyDetails', zpid)
+    .then(function(data) {
+      //var results = data.response[0].results[0].result[0]
+     console.log(data.response[0])
+    })
 
 
 
-// zillow.GetSearchResults(params)
-//     .then(function(result) {
-//       var zpid = result
-//       //return zillow.getUpdatedPropertyDetails(zpid)
+zillow.GetSearchResults(params)
+    .then(function(result) {
+      var zpid = result
+      //return zillow.getUpdatedPropertyDetails(zpid)
 
-//       console.log(zpid)
-//     })
+      console.log(zpid)
+    })
 
-//console.log(deepResults)
+console.log(deepResults)
 
 
 
-//res.render("main/index")
+res.render("main/index")
 
 // ELLE'S ZILLOW NOTES!
 
 
-//  var parameters = {
-//     zpid: 48998252
-//   };
-//   //getting images ect.
-//   zillow.callApi('GetUpdatedPropertyDetails', parameters)
-//     .then(function(data) {
-//       //var results = data.response[0].results[0].result[0]
-//      console.log(data.response[0])
-//      });
+ var parameters = {
+    zpid: 48998252
+  };
+  //getting images ect.
+  zillow.callApi('GetUpdatedPropertyDetails', parameters)
+    .then(function(data) {
+      //var results = data.response[0].results[0].result[0]
+     console.log(data.response[0])
+     });
 
-// app.get("/", function(req, res) {
-//   var parameters = {
-//     zpid: 48998252
-//   };
-//   //getting images ect.
-//   zillow.callApi('GetUpdatedPropertyDetails', parameters)
-//     .then(function(data) {
-//       //var results = data.response[0].results[0].result[0]
-//      console.log(data.response[0])
-//     })
-// });
-
-
-
-// app.get("/:id/results", function(req, res){
-//   // TODO: ENTER CODE HERE
-//   res.render('shared/results')
-// });
+app.get("/", function(req, res) {
+  var parameters = {
+    zpid: 48998252
+  };
+  //getting images ect.
+  zillow.callApi('GetUpdatedPropertyDetails', parameters)
+    .then(function(data) {
+      //var results = data.response[0].results[0].result[0]
+     console.log(data.response[0])
+    })
+});
 
 
 
-// app.listen(3000)
+app.get("/:id/results", function(req, res){
+  // TODO: ENTER CODE HERE
+  res.render('shared/results')
+});
+
+
+
+app.listen(3000)

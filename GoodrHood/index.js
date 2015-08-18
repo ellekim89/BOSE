@@ -57,7 +57,12 @@ app.get("/favorites", function(req,res){
     res.render('main/favorites');
 })
 
-app.get("/", function(req, res) {
+app.get("/", function(req, res){
+  res.render("main/index")
+
+})
+
+app.post("/", function(req, res) {
 
 var params = {
   address: req.body.address,
@@ -68,10 +73,10 @@ var params = {
 };
 
 
-var zpid = zillow.callApi('GetSearchResults', params)
+zillow.callApi('GetSearchResults', params)
   .then(function(result){
-    var id = result.response[0].results[0].result[0].zpid[0]
 
+    var id = result.response[0].results[0].result[0].zpid[0]
     var parameters = {
       zpid: parseInt(id)
     };
@@ -84,8 +89,8 @@ var zpid = zillow.callApi('GetSearchResults', params)
         //var latitude = data.response.address[0].latitude[0]
         //var longitude = data.response.address[0].longitude[0]
         // console.log(results)
-        res.render("main/index", {results: results})
 
+        res.render("main/index", {results: results})
       })
     });
 

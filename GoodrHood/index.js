@@ -13,6 +13,7 @@ var app = express();
 var instagram = require('instagram-node').instagram();
 var client_id = process.env.CLIENT_ID
 var client_secret = process.env.CLIENT_SECRET
+var access_token = process.env.ACCESS_TOKEN
 
 
 app.set('view engine', 'ejs');
@@ -28,11 +29,11 @@ app.use(session({
 app.use(flash());
 
 instagram.use({
-  access_token: '190598825.2abce53.77ed7791dab7429880a63c2ec08218f8'
+  access_token: access_token
 });
 // instagram.use({
-//   client_id: '2abce53e983e40ab88c6cc465ae221cf',
-//   client_secret: 'd67c163621454349a4449625b745af33'
+//   client_id: client_id,
+//   client_secret: client_secret
 // });
 
 
@@ -139,26 +140,26 @@ var redirect_uri = 'http://localhost';
 
 // Instagram api call for /main/results
 app.get('/main/results',function(req, res){
-  res.render('main/results');
-});
-// instagram.location_search({ lat: 48.565464564, lng: 2.34656589 }, function(err, result) {
-//     if (err) {
-//       console.log(err);
-//     } else {
-//        var id = result[0].id
-//         instagram.location_media_recent(id, function(err, result){
-//           if (err) {
-//             console.log(err);
-//           } else {
-//             res.send(result);
-//             console.log(result);
-//           }
-//         // res.send(result);
-//             console.log(result);
-//           });
-//       }
-// })
-// })
+//   res.render('main/results');
+// });
+instagram.location_search({ lat: 48.565464564, lng: 2.34656589 }, function(err, result) {
+    if (err) {
+      console.log(err);
+    } else {
+       var id = result[0].id
+        instagram.location_media_recent(id, function(err, result){
+          if (err) {
+            console.log(err);
+          } else {
+            res.send(result);
+            console.log(result);
+          }
+        // res.send(result);
+            console.log(result);
+          });
+      }
+})
+})
 
 
 app.listen(3000)

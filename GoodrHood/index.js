@@ -10,6 +10,7 @@ var Zillow  = require('node-zillow')
 var zwsid = process.env.ZILLOW_KEY
 var zillow = new Zillow(zwsid)
 var app = express();
+var instagram = require('instagram-node').instagram();
 
 app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({extended: true}));
@@ -94,6 +95,17 @@ app.get("/:id/results", function(req, res){
   res.render('main/results')
 });
 
+
+// instagram.use({
+//   client_id:'2abce53e983e40ab88c6cc465ae221cf',
+//   client_secret:'d67c163621454349a4449625b745af33'
+// });
+
+// app.get('/',function(req, res){
+//   instagram.meda_popular(function(err, medias, remaining, limit){
+//     res.render('main/results/', {grams: medias })
+//   });
+// });
 
 
 app.listen(3000)

@@ -35,26 +35,95 @@ instagram.use({
 //   client_id: client_id,
 //   client_secret: client_secret
 // });
+app.use(function(req,res,next){
+  // req.session.user = 8;
+  if(req.session.user){
+    db.user.findById(req.session.user).then(function(user){
+      req.currentUser = user;
+      next();
+    });
+
+  }else{
+    req.currentUser = false;
+    next();
+  }
+});
+
+app.use(function(req,res,next){
+  res.locals.currentUser = req.currentUser;
+  res.locals.alerts = req.flash();
+  next();
+});
 
 
 app.get("/signup", function(req,res){
-  // TODO: ENTER CODE HERE
   res.render('main/signup');
 });
 
 app.post("/signup", function(req, res){
-    // TODO: ENTER CODE HERE
+    if(req.body.password != req.body.password2){
+    req.flash('danger','Passwords must match.')
+    res.redirect('/auth/signup');
+  }else{
+    db.user.findOrCreate({
+      where:{
+        email: req.body.email
+      },
+      defaults:{
+        email: req.body.email,
+        password: req.body.password,
+        name: req.body.name
+      }
+    }).spread(function(user,created){
+      if(created){
+        req.flash('success','You are signed up.')
+        res.redirect('/');
+      }else{
+        // throw new Error('A user with that e-mail address already exists.');
+        // res.send('A user with that e-mail address already exists.');
+        req.flash('danger','A user with that e-mail address already exists.');
+        res.redirect('/auth/signup');
+      }
+    }).catch(function(err){
+      if(err.message){
+        req.flash('danger',err.message);
+      }else{
+        req.flash('danger','unknown error.');
+        console.log(err);
+      }
+      res.redirect('/auth/signup');
+    })
+  }
 })
 
 
 app.get("/login", function(req,res){
-    // TODO: ENTER CODE HERE
     res.render('main/login');
 });
 
+
+app.post('/login', function(req, res){
+  db.user.authenticate(req.body.email,req.body.password,function(err,user){
+    if(err){
+      res.send(err);
+    }else if(user){
+      req.session.user = user.id;
+      req.flash('success','You are logged in.');
+      res.redirect('/');
+    }else{
+      req.flash('danger','invalid username or password');
+      res.redirect('/auth/login');
+    }
+  });
+})
+
 app.get("/favorites", function(req,res){
-    // TODO: ENTER CODE HERE
+  if(req.currentUser){
     res.render('main/favorites');
+  }else{
+    req.flash('danger','ACCESS DENIED!!!');
+    res.redirect('/');
+  }
 })
 
 app.get("/", function(req, res){

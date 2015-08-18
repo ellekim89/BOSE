@@ -26,7 +26,7 @@ app.use(session({
   saveUninitialized: true
 }));
 app.use(flash());
-<<<<<<< HEAD
+
 instagram.use({
   access_token: '190598825.2abce53.77ed7791dab7429880a63c2ec08218f8'
 });
@@ -34,8 +34,7 @@ instagram.use({
 //   client_id: '2abce53e983e40ab88c6cc465ae221cf',
 //   client_secret: 'd67c163621454349a4449625b745af33'
 // });
-=======
->>>>>>> 71adc35c65938c9b1dddc8d9cc9dee3f92f105cb
+
 
 app.get("/signup", function(req,res){
   // TODO: ENTER CODE HERE
@@ -45,10 +44,8 @@ app.get("/signup", function(req,res){
 app.post("/signup", function(req, res){
     // TODO: ENTER CODE HERE
 })
-<<<<<<< HEAD
 
-=======
->>>>>>> 71adc35c65938c9b1dddc8d9cc9dee3f92f105cb
+
 app.get("/login", function(req,res){
     // TODO: ENTER CODE HERE
     res.render('main/login');
@@ -75,7 +72,6 @@ var zpid = zillow.callApi('GetSearchResults', params)
     var id = result.response[0].results[0].result[0].zpid[0]
 
     var parameters = {
-<<<<<<< HEAD
       zpid: parseInt(id)
     };
     //var zpid = parseInt(id)
@@ -88,19 +84,10 @@ var zpid = zillow.callApi('GetSearchResults', params)
         //var longitude = data.response.address[0].longitude[0]
         // console.log(results)
         res.render("main/index", {results: results})
-=======
-  zpid: parseInt(id)
-};
-    var zpid = parseInt(id)
-      zillow.callApi('GetUpdatedPropertyDetails', parameters)
-        .then(function(data) {
-          var results = data.response
-        console.log(results)
->>>>>>> 71adc35c65938c9b1dddc8d9cc9dee3f92f105cb
+
       })
     });
 
-<<<<<<< HEAD
 
 });
 
@@ -108,28 +95,7 @@ var zpid = zillow.callApi('GetSearchResults', params)
 
 
 
-=======
-    console.log(id)
-    })
 
-  zillow.callApi('GetUpdatedPropertyDetails', zpid)
-    .then(function(data) {
-      //var results = data.response[0].results[0].result[0]
-     console.log(data.response[0])
-    })
-
-
-
-zillow.GetSearchResults(params)
-    .then(function(result) {
-      var zpid = result
-      //return zillow.getUpdatedPropertyDetails(zpid)
-
-      console.log(zpid)
-    })
-
-console.log(deepResults)
->>>>>>> 71adc35c65938c9b1dddc8d9cc9dee3f92f105cb
 
 // app.get("/:id/results", function(req, res){
 //   // TODO: ENTER CODE HERE
@@ -137,42 +103,15 @@ console.log(deepResults)
 // });
 
 
-<<<<<<< HEAD
-=======
-res.render("main/index")
->>>>>>> 71adc35c65938c9b1dddc8d9cc9dee3f92f105cb
 
 
 
-<<<<<<< HEAD
 var redirect_uri = 'http://localhost';
 
 // exports.authorize_user = function(req, res) {
 //   res.redirect(instagram.get_authorization_url(redirect_uri, { scope: ['likes'], state: 'washington' }));
 // };
-=======
- var parameters = {
-    zpid: 48998252
-  };
-  //getting images ect.
-  zillow.callApi('GetUpdatedPropertyDetails', parameters)
-    .then(function(data) {
-      //var results = data.response[0].results[0].result[0]
-     console.log(data.response[0])
-     });
 
-app.get("/", function(req, res) {
-  var parameters = {
-    zpid: 48998252
-  };
-  //getting images ect.
-  zillow.callApi('GetUpdatedPropertyDetails', parameters)
-    .then(function(data) {
-      //var results = data.response[0].results[0].result[0]
-     console.log(data.response[0])
-    })
-});
->>>>>>> 71adc35c65938c9b1dddc8d9cc9dee3f92f105cb
 
 // exports.handleauth = function(req, res) {
 //   instagram.authorize_user(req.query.code, redirect_uri, function(err, result) {
@@ -191,16 +130,11 @@ app.get("/", function(req, res) {
 // This is your redirect URI
 // app.get('/handleauth', exports.handleauth);
 
-<<<<<<< HEAD
+
 // http.createServer(app).listen(app.get('port'), function(){
 //   console.log("Express server listening on port " + app.get('port'));
 // });
-=======
-app.get("/:id/results", function(req, res){
-  // TODO: ENTER CODE HERE
-  res.render('shared/results')
-});
->>>>>>> 71adc35c65938c9b1dddc8d9cc9dee3f92f105cb
+
 
 
 // Instagram api call for /main/results

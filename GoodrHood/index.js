@@ -10,6 +10,7 @@ var Zillow  = require('node-zillow')
 var zwsid = process.env.ZILLOW_KEY
 var zillow = new Zillow(zwsid)
 var app = express();
+var instagram = require('instagram-node').instagram();
 
 app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({extended: true}));
@@ -23,25 +24,25 @@ app.use(session({
 }));
 app.use(flash());
 
-// app.get("/signup", function(req,res){
-//   // TODO: ENTER CODE HERE
-//   res.render('main/signup');
-// });
+app.get("/signup", function(req,res){
+  // TODO: ENTER CODE HERE
+  res.render('main/signup');
+});
 
-// app.post("/signup", function(req, res){
-//     // TODO: ENTER CODE HERE
-// })
-// app.get("/login", function(req,res){
-//     // TODO: ENTER CODE HERE
-//     res.render('main/login');
-// });
+app.post("/signup", function(req, res){
+    // TODO: ENTER CODE HERE
+})
+app.get("/login", function(req,res){
+    // TODO: ENTER CODE HERE
+    res.render('main/login');
+});
 
-// app.get("/favorites", function(req,res){
-//     // TODO: ENTER CODE HERE
-//     res.render('main/favorites');
-// })
+app.get("/favorites", function(req,res){
+    // TODO: ENTER CODE HERE
+    res.render('main/favorites');
+})
 
-//app.get("/", function(req, res) {
+app.get("/", function(req, res) {
 
 var params = {
   address: "106 NW 42nd St",
@@ -124,5 +125,16 @@ var zpid = zillow.callApi('GetSearchResults', params)
 // });
 
 
+// instagram.use({
+//   client_id:'2abce53e983e40ab88c6cc465ae221cf',
+//   client_secret:'d67c163621454349a4449625b745af33'
+// });
 
-// app.listen(3000)
+// app.get('/',function(req, res){
+//   instagram.meda_popular(function(err, medias, remaining, limit){
+//     res.render('main/results/', {grams: medias })
+//   });
+// });
+
+
+app.listen(3000)

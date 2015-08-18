@@ -1,6 +1,6 @@
 var express = require('express');
-var bodyParser = require('body-parser');
 var db = require('./models');
+var bodyParser = require('body-parser');
 var request = require('request');
 var methodOverride = require('method-override');
 var ejsLayouts = require('express-ejs-layouts');
@@ -9,11 +9,11 @@ var flash = require('connect-flash');
 var Zillow  = require('node-zillow')
 var zwsid = process.env.ZILLOW_KEY
 var zillow = new Zillow(zwsid)
-var app = express();
 var instagram = require('instagram-node').instagram();
 var client_id = process.env.CLIENT_ID
 var client_secret = process.env.CLIENT_SECRET
 var access_token = process.env.ACCESS_TOKEN
+var app = express();
 
 
 app.set('view engine', 'ejs');
@@ -234,6 +234,12 @@ instagram.location_search({ lat: 48.565464564, lng: 2.34656589 }, function(err, 
       }
 })
 })
+
+app.get('/logout',function(req,res){
+  req.flash('info','You have been logged out.');
+  req.session.user = false;
+  res.redirect('/');
+});
 
 
 app.listen(3000)

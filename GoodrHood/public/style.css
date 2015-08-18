@@ -1,11 +1,11 @@
 
 /* Begin video CSS */
-.fullscreen-bg {
+/*.fullscreen-bg {
   position: fixed;
   top: 0;
-  right: 0;
+  right: 14px;
   bottom: 0;
-  left: 0;
+  left: 14px;
   overflow: hidden;
   z-index: -100;
   opacity: 0.5;
@@ -16,7 +16,78 @@
   top: 0;
   left: 0;
   width: 100%;
-  height: 100%;
+  height: 20%;
+}*/
+body {
+  background: url("img/seattle-bg.jpg") 50% 0 repeat fixed;
+  min-height: 800px;
+  height: 800px;
+  margin: 0 auto;
+  width: 100%;
+  max-width: 1920px;
+  position: relative;
+
+}
+
+#home {
+  background: url("img/seattle-bg.jpg") 50% 0 repeat fixed;
+  min-height: 800px;
+  height: 800px;
+  margin: 0 auto;
+  width: 100%;
+  max-width: 1920px;
+  position: relative;
+}
+
+#home article {
+  height: 458px;
+  position: absolute;
+  text-align: center;
+  top: 150px;
+  width: 80%;
+  margin-left: 10%;
+}
+
+#about {
+  background: url("http://wallrere.com/wp-content/uploads/2015/05/white-background-wallpaper-24603.jpg") 100% 0 repeat fixed; min-height: 500px;
+  height: 500px;
+  margin: 0 auto;
+  width: 100%;
+  max-width: 1920px;
+  position: relative;
+  -webkit-box-shadow: 0 0 50px rgba(0,0,0,0.8);
+  box-shadow: 0 0 50px rgba(0,0,0,0.8);
+}
+
+#about article {
+  height: 458px;
+  position: absolute;
+  text-align: center;
+  top: 150px;
+  width: 100%;
+}
+
+#cta {
+  color: black;
+}
+
+#section3 {
+  background: url("http://purpleroofs.com/gay-travel-blog/wp-content/uploads/2012/10/vivace-capitol-hill.jpg") 50% 0 repeat fixed;
+  min-height: 800px;
+  height: 800px;
+  margin: 0 auto;
+  width: 100%;
+  max-width: 1920px;
+  position: relative;
+}
+
+#section3 article {
+  height: 458px;
+  position: absolute;
+  text-align: center;
+  top: 150px;
+  width: 80%;
+  margin-left: 10%;
 }
 
 /*Results page CSS*/

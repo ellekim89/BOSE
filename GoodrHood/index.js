@@ -62,6 +62,14 @@ app.use(function(req,res,next){
   next();
 });
 
+app.get("/contact", function(req, res){
+  res.render('main/contact');
+});
+
+app.get("/team", function(req, res){
+  res.render('main/team');
+});
+
 
 app.get("/signup", function(req,res){
   res.render('main/signup');
@@ -132,6 +140,29 @@ app.get("/favorites", function(req,res){
     res.redirect('/');
   }
 })
+
+// FAVORITES BEGINS HERE
+
+// GET http://localhost:3000/favorites
+// app.get('/favorites',function(req,res){
+//   db.favorite.findAll({
+//     include:[db.address],
+//     include:[db.zipcode]
+//   }).then(function(favorites){
+//     res.render('main/favorites',{favorites:favorites});
+//   });
+// });
+
+// // POST http://localhost:3000/favorites
+// app.post('/favorites',function(req,res){
+//   // res.send(req.body)
+//   db.favorite.create({
+//     address:req.body.address,
+//     zipcode:req.body.zip_code
+//   }).then(function(movie){
+//     res.redirect('main/results');
+//   });
+// });
 
 app.get("/", function(req, res){
   res.render("main/index")
@@ -310,6 +341,9 @@ app.get('/logout',function(req,res){
   req.session.user = false;
   res.redirect('/');
 });
+
+
+
 
 
 app.listen(3000)

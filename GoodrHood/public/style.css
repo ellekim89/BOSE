@@ -32,26 +32,6 @@ ul .actions {
   margin-top: 20px;
 }
 
-
-/*LOG IN PAGE*/
-.login-page {
-   background-image: url ("seattle-bg.jpg");
-   position: cover;
-   text-align: center;
-   margin-top: 50px;
-}
-
- .container, h1{
-  margin-top: 50px;
-}
-.login-page, form {
-
-  position: absolute;
-  text-align: center;
-  width: 80%;
-
-}
-
 /*Results page CSS*/
 
 .side-bar {

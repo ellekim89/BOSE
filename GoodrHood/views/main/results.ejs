@@ -12,19 +12,15 @@
 
       <div class="score">
         <form method="post" action="/favorites">
-        <input type="hidden" name="fave_Address" value="<%= info.yelpZillow.info.zillow.address %>">
-        <!-- <input type="hidden" name="fave_Zipcode" value="<%= info.yelpZillow.info.zillow.zipcode %>"> -->
-       <!--  <input type="hidden" name="fave_Score" value="<%= info.yelpZillow.info.yelpFoodScore + info.yelpZillow.info.yelpEntertainmentScore %>"> -->
+        <input type="hidden" name="fave_Address" value="<%= results.main.info.yelpZillow.zillow.address %>">
+
+
          <button class="btn btn-success">favorite</button>
         </form>
         <h2> Score:
         <%= results.main.info.yelpZillow.yelpFoodScore + results.main.info.yelpZillow.yelpEntertainmentScore %> </h2>
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-          tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-          quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-          consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-          cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-          proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+        <p>
+          <%= results.main.info.community_snippet %>
         </p>
 
           <div class="progress">
@@ -38,7 +34,7 @@
       <div class="overall-score col-md-12">
         <div class="col-md-3">
           <div class="walk-score small">
-          Proximity: 95/100
+          Proximity: <%= results.walkscore.walkscore %>
           </div>
         </div>
 

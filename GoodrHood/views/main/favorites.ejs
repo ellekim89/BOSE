@@ -1,11 +1,18 @@
 <h1>Favorites</h1>
+<!-- Main -->
+        <section id="main" class="container">
+          <header class="login-screen">
+            <h2>Favorites</h2>
+            <p>Love where you live!</p>
+          </header>
+          <%= name %>'s favorites
+          <div class="box">
 
-<% myFavorite.forEach(function(result) { %>
-<div class="well">
+            <% favorites.forEach(function(result){ %>
+             <div class="well">
+              <%= result.address %>
+              </div>
+            <% }); %>
 
-  <%= result.address %>
-  <%= result.zipcode %>
-
-</div>
-
-<% }); %>
+               </div>
+        </section>

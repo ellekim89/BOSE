@@ -14,8 +14,9 @@ var ejsLayouts = require('express-ejs-layouts');
 var session = require('express-session');
 var flash = require('connect-flash');
 var Zillow  = require('node-zillow')
-var zwsid = process.env.ZILLOW_KEY
-var zillow = new Zillow(zwsid)
+var zwsid = process.env.ZILLOW_KEY;
+var zillow = new Zillow(zwsid);
+var cheerio = require('cheerio');
 var instagram = require('instagram-node').instagram();
 var client_id = process.env.CLIENT_ID;
 var client_secret = process.env.CLIENT_SECRET;
@@ -225,19 +226,52 @@ app.get("/search", function(req, res) {
           score = score / ratingsArr.length;
           var entertainmentRate = score
           var entertainmentScore = Math.round(score*50);
+          var snippet = []
+
             var yelpZillowObj = {
               zillow:zillowObj,
               yelpFoodRating: foodRate,
               yelpEntertainmentRating: entertainmentRate,
               yelpFoodScore:foodScore,
-              yelpEntertainmentScore: entertainmentScore
+              yelpEntertainmentScore: entertainmentScore,
+              neighborhood: data.businesses[0].location.neighborhoods[0],
             }
           callback(null, yelpZillowObj);
         })
       })
     },
     function(yelpZillowObj, callback){
-      instagram.location_search({ lat: parseFloat(yelpZillowObj.zillow.lat), lng: parseFloat(yelpZillowObj.zillow.lon) }, function(err, result) {
+      request('http://www.visitseattle.org/neighborhoods/'+yelpZillowObj.neighborhood, function (error, response, data) {
+        if (!error && response.statusCode == 200) {
+          var $ = cheerio.load(data);
+
+
+          var blocks = $('.block-inner');
+
+
+
+          var title = blocks.first().find('h1').text();
+          // console.log(title);
+
+
+
+          blocks.eq(1).find('p').each(function(index, element){
+            var snippet =($(element).text());
+
+            var requestObj = {
+              yelpZillow:yelpZillowObj,
+              community_snippet: snippet
+            }
+            // res.send(requestObj)
+            callback(null, requestObj)
+          })
+
+
+        }
+      });
+    },
+    function(requestObj, callback){
+      instagram.location_search({ lat: parseFloat(requestObj.yelpZillow.zillow.lat), lng: parseFloat(requestObj.yelpZillow.zillow.lon) }, function(err, result) {
         if (err) {
           res.send(err+"no sam");
         } else {
@@ -247,7 +281,7 @@ app.get("/search", function(req, res) {
                 res.send(err+"no sam");
               } else {
                 var finalObj = {
-                  info:yelpZillowObj,
+                  info:requestObj,
                   images:result,
                 }
                 // console.log(result);
@@ -260,11 +294,11 @@ app.get("/search", function(req, res) {
     },
     function(finalObj, callback){
       console.log(process.env.WALKSCORE_KEY)
-      var url = 'http://api.walkscore.com/score?format=json&address='+finalObj.info.zillow.address.split(' ').join('%20')+'&lat='+parseFloat(finalObj.info.zillow.lat)+'&lon='+parseFloat(finalObj.info.zillow.lon)+'&wsapikey='+wsapikey
+      var url = 'http://api.walkscore.com/score?format=json&address='+finalObj.info.yelpZillow.zillow.address.split(' ').join('%20')+'&lat='+parseFloat(finalObj.info.yelpZillow.zillow.lat)+'&lon='+parseFloat(finalObj.info.yelpZillow.zillow.lon)+'&wsapikey='+wsapikey;
       request(url, function(err, response, data){
         if(data){
           var fullObj = {
-            yelpZillow: finalObj,
+            main: finalObj,
             walkscore: JSON.parse(data),
           }
           callback(null, fullObj)
@@ -275,10 +309,8 @@ app.get("/search", function(req, res) {
     }
   ], function(err,results){
 
-    //res.send(results)
-    res.render('main/results', {info:results, apikey:parseInt(ws_api_key)})
-
-    // console.log(ws_api_key)
+    // res.send(results)
+    res.render('main/results', {results:results, apikey:parseInt(ws_api_key)})
   })
 });
 

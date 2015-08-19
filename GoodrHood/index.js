@@ -46,7 +46,7 @@ instagram.use({
 //   client_secret: client_secret
 // });
 app.use(function(req,res,next){
-  req.session.user = 1;
+  // req.session.user = 1;
   if(req.session.user){
     db.user.findById(req.session.user).then(function(user){
       req.currentUser = user;
@@ -199,6 +199,7 @@ app.get("/search", function(req, res) {
               lat: zillowResult.address[0].latitude[0],
               lon: zillowResult.address[0].longitude[0]
             }
+            console.log('step 1')
             callback(null, zillowObj)
           }
           // console.log(zillowObj)
@@ -231,8 +232,6 @@ app.get("/search", function(req, res) {
           score = score / ratingsArr.length;
           var entertainmentRate = score
           var entertainmentScore = Math.round(score*50);
-          var snippet = []
-
             var yelpZillowObj = {
               zillow:zillowObj,
               yelpFoodRating: foodRate,
@@ -241,37 +240,34 @@ app.get("/search", function(req, res) {
               yelpEntertainmentScore: entertainmentScore,
               neighborhood: data.businesses[0].location.neighborhoods[0],
             }
+          console.log('step 2')
           callback(null, yelpZillowObj);
         })
       })
     },
     function(yelpZillowObj, callback){
-      request('http://www.visitseattle.org/neighborhoods/'+yelpZillowObj.neighborhood, function (error, response, data) {
+      console.log(yelpZillowObj.neighborhood.toString)
+
+      if(yelpZillowObj.neighborhoods == 'Downtown'){
+      var url = 'http://www.visitseattle.org/neighborhoods/'+yelpZillowObj.neighborhood+'-seattle'
+      }else{
+      var url = 'http://www.visitseattle.org/neighborhoods/'+yelpZillowObj.neighborhood
+      };
+      console.log(url)
+      request(url, function (error, response, data) {
         if (!error && response.statusCode == 200) {
           var $ = cheerio.load(data);
-
-
           var blocks = $('.block-inner');
-
-
-
           var title = blocks.first().find('h1').text();
-          // console.log(title);
-
-
-
           blocks.eq(1).find('p').each(function(index, element){
-            var snippet =($(element).text());
-
+            var snippet = ($(element).text());
             var requestObj = {
               yelpZillow:yelpZillowObj,
               community_snippet: snippet
-            }
-            // res.send(requestObj)
+            };
+            console.log('step 3')
             callback(null, requestObj)
           })
-
-
         }
       });
     },
@@ -291,6 +287,7 @@ app.get("/search", function(req, res) {
                 }
                 // console.log(result);
                 // res.send(finalObj)
+                console.log('step 4')
                 callback(null, finalObj)
               }
             });
@@ -306,6 +303,7 @@ app.get("/search", function(req, res) {
             main: finalObj,
             walkscore: JSON.parse(data),
           }
+          console.log('step 5')
           callback(null, fullObj)
         }else{
           res.send(err)

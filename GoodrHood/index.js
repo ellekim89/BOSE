@@ -133,14 +133,22 @@ app.post('/login', function(req, res){
   });
 })
 
-app.get("/favorites", function(req,res){
-  if(req.currentUser){
-    res.render('main/favorites');
-  }else{
-    req.flash('danger','ACCESS DENIED!!!');
-    res.redirect('/');
-  }
-})
+// FAVORITES
+// GET Favorites localhost:3000/favorites
+app.get("/favorites", function(req, res){
+  res.render('main/favorites');
+});
+
+// POST favorites
+app.post("/favorites", function(req,res){
+    db.favorite.findOrCreate({
+      where:{address: req.query.address,
+             zipcode: req.query.zip_code}}).spread(function(favorite, created){
+    res.render('main/favorites',{myFaveorite: favorite})
+  });
+});
+
+
 
 // FAVORITES BEGINS HERE
 
@@ -154,16 +162,6 @@ app.get("/favorites", function(req,res){
 //   });
 // });
 
-// // POST http://localhost:3000/favorites
-// app.post('/favorites',function(req,res){
-//   // res.send(req.body)
-//   db.favorite.create({
-//     address:req.body.address,
-//     zipcode:req.body.zip_code
-//   }).then(function(movie){
-//     res.redirect('main/results');
-//   });
-// });
 
 app.get("/", function(req, res){
   res.render("main/index")

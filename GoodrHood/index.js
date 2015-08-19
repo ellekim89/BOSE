@@ -275,7 +275,7 @@ app.get("/search", function(req, res) {
       })
     }
   ], function(err,results){
-    // res.send(results)
+    //res.send(results)
     res.render('main/results', {info:results, apikey:parseInt(ws_api_key)})
     // console.log(ws_api_key)
   })

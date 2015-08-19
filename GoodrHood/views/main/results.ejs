@@ -11,6 +11,12 @@
     <div class="section overview col-md-12">
 
       <div class="score">
+        <form method="post" action="/favorites">
+        <input type="hidden" name="fave_Address" value="<%= info.yelpZillow.info.zillow.address %>">
+        <!-- <input type="hidden" name="fave_Zipcode" value="<%= info.yelpZillow.info.zillow.zipcode %>"> -->
+       <!--  <input type="hidden" name="fave_Score" value="<%= info.yelpZillow.info.yelpFoodScore + info.yelpZillow.info.yelpEntertainmentScore %>"> -->
+         <button class="btn btn-success">favorite</button>
+        </form>
         <h2> Score:
         <%= results.main.info.yelpZillow.yelpFoodScore + results.main.info.yelpZillow.yelpEntertainmentScore %> </h2>
         <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod

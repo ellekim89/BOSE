@@ -46,7 +46,7 @@ instagram.use({
 //   client_secret: client_secret
 // });
 app.use(function(req,res,next){
-  // req.session.user = 8;
+  req.session.user = 1;
   if(req.session.user){
     db.user.findById(req.session.user).then(function(user){
       req.currentUser = user;
@@ -137,16 +137,21 @@ app.post('/login', function(req, res){
 
 // FAVORITES
 // GET Favorites localhost:3000/favorites
-app.get("/favorites", function(req, res){
-  res.render('main/favorites');
+app.get("/:id/favorites", function(req, res){
+  // res.send('working');
+  db.favorite.findById(parseInt(req.params.id)).then(function(favorite){
+    res.render('main/favorites', {myfavorite: favorite});
+  });
+
 });
 
 // POST favorites
 app.post("/favorites", function(req,res){
+  // res.send(req.body);
     db.favorite.findOrCreate({
-      where:{address: req.query.address,
-             zipcode: req.query.zip_code}}).spread(function(favorite, created){
-    res.render('main/favorites',{myFaveorite: favorite})
+      where:{user_id: req.currentUser.id,
+             address: req.body.fave_Address}}).spread(function(favorite, created){
+    res.redirect('main/favorites',{myFavorite: favorite})
   });
 });
 

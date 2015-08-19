@@ -4,7 +4,7 @@
   </div>
 
   <div class="side-bar col-md-8"><h1>Results</h1>
-    <% info.yelpZillow.images.forEach(function(image){ %>
+    <% results.main.images.forEach(function(image){ %>
       <img src="<%= image.images.thumbnail.url  %>">
     <% }) %>
 
@@ -12,7 +12,7 @@
 
       <div class="score">
         <h2> Score:
-        <%= info.yelpZillow.info.yelpFoodScore + info.yelpZillow.info.yelpEntertainmentScore %> </h2>
+        <%= results.main.info.yelpZillow.yelpFoodScore + results.main.info.yelpZillow.yelpEntertainmentScore %> </h2>
         <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
           tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
           quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
@@ -22,7 +22,7 @@
         </p>
 
           <div class="progress">
-            <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="<%= (info.yelpZillow.info.yelpFoodScore + info.yelpZillow.info.yelpEntertainmentScore)%> " aria-valuemin="0" aria-valuemax="500" style="width: <%= 100 * (info.yelpZillow.info.yelpFoodScore + info.yelpZillow.info.yelpEntertainmentScore)/500%>%;">
+            <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="<%= (results.main.info.yelpZillow.yelpFoodScore + results.main.info.yelpZillow.yelpEntertainmentScore)%> " aria-valuemin="0" aria-valuemax="500" style="width: <%= 100 * (results.main.info.yelpZillow.yelpFoodScore + results.main.info.yelpZillow.yelpEntertainmentScore)/500%>%;">
               <span class="sr-only">500 Complete</span>
             </div>
           </div>
@@ -51,7 +51,7 @@
 
         <div class="col-md-3">
           <div class="ratings sentiment small">
-          Places: <%= ((info.yelpZillow.info.yelpFoodRating + info.yelpZillow.info.yelpEntertainmentRating)/2).toFixed(2) %> Stars
+          Places: <%= ((results.main.info.yelpZillow.yelpFoodRating + results.main.info.yelpZillow.yelpEntertainmentRating)/2).toFixed(2) %> Stars
           </div>
         </div>
       </div>

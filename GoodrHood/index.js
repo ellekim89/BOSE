@@ -247,20 +247,22 @@ app.get("/search", function(req, res) {
               yelpEntertainmentRating: entertainmentRate,
               yelpFoodScore:foodScore,
               yelpEntertainmentScore: entertainmentScore,
-              neighborhood: data.businesses[0].location.neighborhoods[0],
+              neighborhood: data.businesses[2].location.neighborhoods[0],
             }
           console.log('step 2')
+          // res.send(yelpZillowObj)
           callback(null, yelpZillowObj);
         })
       })
     },
     function(yelpZillowObj, callback){
-      console.log(yelpZillowObj.neighborhood.toString)
-
-      if(yelpZillowObj.neighborhoods == 'Downtown'){
-      var url = 'http://www.visitseattle.org/neighborhoods/'+yelpZillowObj.neighborhood+'-seattle'
+      console.log(yelpZillowObj.neighborhood)
+      var neighborhood = yelpZillowObj.neighborhood.toLowerCase().replace(/\b(?:lower |it is|we all|an?|by|to|you|[mh]e|she|they|we...)\b/ig, '');;
+      console.log(neighborhood)
+      if(yelpZillowObj.neighborhood == "Downtown"){
+      var url = 'http://www.visitseattle.org/neighborhoods/'+neighborhood+'-seattle'
       }else{
-      var url = 'http://www.visitseattle.org/neighborhoods/'+yelpZillowObj.neighborhood
+      var url = 'http://www.visitseattle.org/neighborhoods/'+neighborhood.split(' ').join('-')
       };
       console.log(url)
       request(url, function (error, response, data) {
@@ -304,7 +306,6 @@ app.get("/search", function(req, res) {
   })
     },
     function(finalObj, callback){
-      console.log(process.env.WALKSCORE_KEY)
       var url = 'http://api.walkscore.com/score?format=json&address='+finalObj.info.yelpZillow.zillow.address.split(' ').join('%20')+'&lat='+parseFloat(finalObj.info.yelpZillow.zillow.lat)+'&lon='+parseFloat(finalObj.info.yelpZillow.zillow.lon)+'&wsapikey='+wsapikey;
       request(url, function(err, response, data){
         if(data){
@@ -321,8 +322,8 @@ app.get("/search", function(req, res) {
     }
   ], function(err,results){
 
-     res.send(results)
-    //res.render('main/results', {results:results, apikey:parseInt(ws_api_key)})
+     // res.send(results)
+    res.render('main/results', {results:results, apikey:parseInt(ws_api_key)})
   })
 });
 

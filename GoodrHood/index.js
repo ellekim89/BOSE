@@ -17,10 +17,11 @@ var Zillow  = require('node-zillow')
 var zwsid = process.env.ZILLOW_KEY
 var zillow = new Zillow(zwsid)
 var instagram = require('instagram-node').instagram();
-var client_id = process.env.CLIENT_ID
-var client_secret = process.env.CLIENT_SECRET
-var access_token = process.env.ACCESS_TOKEN
-var ws_api_key = process.env.WALKSCORE_API_KEY
+var client_id = process.env.CLIENT_ID;
+var client_secret = process.env.CLIENT_SECRET;
+var access_token = process.env.ACCESS_TOKEN;
+var ws_api_key = process.env.WALKSCORE_API_KEY;
+var wsapikey = process.env.WSAPIKEY;
 var app = express();
 
 
@@ -260,14 +261,14 @@ app.get("/search", function(req, res) {
   })
     },
     function(finalObj, callback){
-      var url = 'http://api.walkscore.com/score?format=json&address='+finalObj.info.zillow.address.split(' ').join('%20')+'&lat='+parseFloat(finalObj.info.zillow.lat)+'&lon='+parseFloat(finalObj.info.zillow.lat)+'&wsapikey='+ws_api_key
+      console.log(process.env.WALKSCORE_KEY)
+      var url = 'http://api.walkscore.com/score?format=json&address='+finalObj.info.zillow.address.split(' ').join('%20')+'&lat='+parseFloat(finalObj.info.zillow.lat)+'&lon='+parseFloat(finalObj.info.zillow.lon)+'&wsapikey='+wsapikey
       request(url, function(err, response, data){
         if(data){
           var fullObj = {
             yelpZillow: finalObj,
             walkscore: JSON.parse(data),
           }
-          // res.send(fullObj)
           callback(null, fullObj)
         }else{
           res.send(err)
@@ -275,8 +276,10 @@ app.get("/search", function(req, res) {
       })
     }
   ], function(err,results){
+
     //res.send(results)
     res.render('main/results', {info:results, apikey:parseInt(ws_api_key)})
+
     // console.log(ws_api_key)
   })
 });

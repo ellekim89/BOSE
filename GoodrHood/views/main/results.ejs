@@ -1,11 +1,11 @@
 
-  <div class="map-result col-md-4">map area
+ <div class="map-result col-md-4">map area
     <%- include ../shared/map.ejs %>
   </div>
 
   <div class="side-bar col-md-8"><h1>Results</h1>
     <% info.yelpZillow.images.forEach(function(image){ %>
-      <img src="<%= image.images.low_resolution.url  %>">
+      <img src="<%= image.images.thumbnail.url  %>">
     <% }) %>
 
     <div class="section overview col-md-12">
@@ -20,6 +20,7 @@
           cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
           proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
         </p>
+
           <div class="progress">
             <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="<%= (info.yelpZillow.info.yelpFoodScore + info.yelpZillow.info.yelpEntertainmentScore)%> " aria-valuemin="0" aria-valuemax="500" style="width: <%= 100 * (info.yelpZillow.info.yelpFoodScore + info.yelpZillow.info.yelpEntertainmentScore)/500%>%;">
               <span class="sr-only">500 Complete</span>
@@ -28,23 +29,26 @@
       </div>
     </div>
 
-
       <div class="overall-score col-md-12">
         <div class="col-md-3">
           <div class="walk-score small">
           Proximity: 95/100
           </div>
         </div>
+
         <div class="col-md-3">
           <div class="personlity small">
           People: Happy
           </div>
         </div>
+
         <div class="col-md-3">
           <div class="cost-of-living small ">
           Price: $$$$
           </div>
         </div>
+
+
         <div class="col-md-3">
           <div class="ratings sentiment small">
           Places: <%= ((info.yelpZillow.info.yelpFoodRating + info.yelpZillow.info.yelpEntertainmentRating)/2).toFixed(2) %> Stars
@@ -53,10 +57,7 @@
       </div>
 
 
-
       <div class="ratings-info">
-
       </div>
-
     </div>
   </div>

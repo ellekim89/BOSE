@@ -1,14 +1,11 @@
 <h1>Favorites</h1>
 
-<% favorites.forEach(function(result) { %>
+<% myFavorite.forEach(function(result) { %>
 <div class="well">
-  <img src="<%= result.image %>" height="70" class="pull-right">
-  <h2><a href="/movies/<%= movie.imdbId %>"><%= movie.title %> (<%= movie.year %>)</a></h2>
-  <a href="/favorites/<%= movie.id %>/comments" class="btn btn-primary">
-    Comments (<%= movie.comments.length %>)
-  </a>
-  <form method="post" action="/favorites/<%= movie.id %>?_method=delete">
-  <button type="submit" class="btn btn-danger glyphicon glyphicon-trash"></button>
-  </form>
+
+  <%= result.address %>
+  <%= result.zipcode %>
+
 </div>
+
 <% }); %>

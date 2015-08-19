@@ -20,6 +20,7 @@ var instagram = require('instagram-node').instagram();
 var client_id = process.env.CLIENT_ID
 var client_secret = process.env.CLIENT_SECRET
 var access_token = process.env.ACCESS_TOKEN
+var ws_api_key = process.env.WALKSCORE_API_KEY
 var app = express();
 
 
@@ -232,15 +233,12 @@ app.get("/search", function(req, res) {
               yelpFoodScore:foodScore,
               yelpEntertainmentScore: entertainmentScore
             }
-          // res.send(yelpZillowObj)
           callback(null, yelpZillowObj);
         })
       })
     },
     function(yelpZillowObj, callback){
-      // res.send(parseInt(yelpZillowObj.zillow.lat))
       instagram.location_search({ lat: parseFloat(yelpZillowObj.zillow.lat), lng: parseFloat(yelpZillowObj.zillow.lon) }, function(err, result) {
-        // res.send(result)
         if (err) {
           res.send(err+"no sam");
         } else {
@@ -253,88 +251,35 @@ app.get("/search", function(req, res) {
                   info:yelpZillowObj,
                   images:result,
                 }
+                // console.log(result);
                 // res.send(finalObj)
-                console.log(result);
                 callback(null, finalObj)
               }
             });
         }
   })
+    },
+    function(finalObj, callback){
+      var url = 'http://api.walkscore.com/score?format=json&address='+finalObj.info.zillow.address.split(' ').join('%20')+'&lat='+parseFloat(finalObj.info.zillow.lat)+'&lon='+parseFloat(finalObj.info.zillow.lat)+'&wsapikey='+ws_api_key
+      request(url, function(err, response, data){
+        if(data){
+          var fullObj = {
+            yelpZillow: finalObj,
+            walkscore: JSON.parse(data),
+          }
+          // res.send(fullObj)
+          callback(null, fullObj)
+        }else{
+          res.send(err)
+        }
+      })
     }
   ], function(err,results){
-    //res.send(results)
-    res.render('main/results', {info:results})
+    // res.send(results)
+    res.render('main/results', {info:results, apikey:parseInt(ws_api_key)})
+    // console.log(ws_api_key)
   })
 });
-
-
-
-
-
-
-
-// app.get("/:id/results", function(req, res){
-//   // TODO: ENTER CODE HERE
-//   res.render('main/results')
-// });
-
-
-
-
-
-var redirect_uri = 'http://localhost';
-
-// exports.authorize_user = function(req, res) {
-//   res.redirect(instagram.get_authorization_url(redirect_uri, { scope: ['likes'], state: 'washington' }));
-// };
-
-
-// exports.handleauth = function(req, res) {
-//   instagram.authorize_user(req.query.code, redirect_uri, function(err, result) {
-//     if (err) {
-//       console.log(err.body);
-//       res.send("Didn't work");
-//     } else {
-//       console.log('Yay! Access token is ' + result.access_token);
-//       res.send('You made it!!');
-//     }
-//   });
-// };
-
-// This is where you would initially send users to authorize
-// app.get('/authorize_user', exports.authorize_user);
-// This is your redirect URI
-// app.get('/handleauth', exports.handleauth);
-
-
-// http.createServer(app).listen(app.get('port'), function(){
-//   console.log("Express server listening on port " + app.get('port'));
-// });
-
-
-
-// Instagram api call for /main/results
-app.get('/main/results',function(req, res){
-//   res.render('main/results');
-// });
-instagram.location_search({ lat: parseFloat(yelpZillowObj.zillow.lat), lng: parseFloat(yelpZillowObj.zillow.lon), distance: 5000}, function(err, result) {
-    if (err) {
-      //console.log(err);
-    } else {
-       var id = result[0].id
-        instagram.location_media_recent(id, function(err, result){
-          if (err) {
-            //console.log(err);
-          } else {
-            res.send(result);
-           // console.log(result);
-          }
-        // res.send(result);
-            //console.log(result);
-          });
-      }
-})
-})
 
 app.get('/logout',function(req,res){
   req.flash('info','You have been logged out.');

@@ -4,15 +4,14 @@ HELLO <%= currentUser.name %>
       <!-- Banner -->
 
         <section id="banner">
+
         <h2>Find a Home That Fits Your Lifestyle</h2>
         <form class="input-form" action="/search" method="GET" role="form">
           <ul class="actions">
-          <input name = "address" type="text" class="form-control" placeholder="Address">
-          <br>
-          <input name = "zip_code" type="integer" class="form-control" placeholder="Zip Code">
-          <button class="btn btn-primary search" type="submit">Search</button>
-            <!-- <li><a href="#" class="button special">Sign Up</a></li>
-            <li><a href="#" class="button">Learn More</a></li> -->
+            <input name = "address" class="form-control" placeholder="Address">
+            <br>
+            <input name = "zip_code" type="integer" class="form-control" placeholder="Zip Code">
+            <button class="btn-lg btn-info search" type="submit">Search</button>
           </ul>
         </form>
         </section>

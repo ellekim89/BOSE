@@ -21,8 +21,8 @@
           proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
         </p>
           <div class="progress">
-            <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="72" aria-valuemin="0" aria-valuemax="100" style="width: 72%;">
-              <span class="sr-only">720 Complete</span>
+            <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="<%= (info.info.yelpFoodScore + info.info.yelpEntertainmentScore)%> " aria-valuemin="0" aria-valuemax="500" style="width: <%= 100 * (info.info.yelpFoodScore + info.info.yelpEntertainmentScore)/500%>%;">
+              <span class="sr-only">500 Complete</span>
             </div>
           </div>
       </div>

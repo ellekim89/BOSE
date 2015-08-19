@@ -288,18 +288,18 @@ app.get('/main/results',function(req, res){
 // });
 instagram.location_search({ lat: parseFloat(yelpZillowObj.zillow.lat), lng: parseFloat(yelpZillowObj.zillow.lon), distance: 5000}, function(err, result) {
     if (err) {
-      console.log(err);
+      //console.log(err);
     } else {
        var id = result[0].id
         instagram.location_media_recent(id, function(err, result){
           if (err) {
-            console.log(err);
+            //console.log(err);
           } else {
             res.send(result);
-            console.log(result);
+           // console.log(result);
           }
         // res.send(result);
-            console.log(result);
+            //console.log(result);
           });
       }
 })

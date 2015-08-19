@@ -1,0 +1,35 @@
+<div class="centerize">
+  <div class="map">
+    <script type='text/javascript'>
+      var ws_industry_type = "industrial";
+      var ws_wsid =  <%= apikey  %>
+      var ws_lat= <%= info.yelpZillow.info.zillow.lat %>
+      var ws_lon= <%= info.yelpZillow.info.zillow.lon %>
+      var ws_width = '500';
+      var ws_height = '1400';
+      var ws_layout = 'vertical';
+      var ws_commute = 'true';
+      var ws_transit_score = 'true';
+      var ws_map_modules = 'google_map';
+      var ws_map_zoom = 15;
+      var ws_show_reviews = "true";
+      var ws_hide_bigger_map = "true";
+      var ws_disable_street_view = "true";
+      var ws_no_link_info_bubbles = "true";
+    </script>
+    <div class="text-center" id='ws-walkscore-tile'>
+    <div class="hider-header"><h1></h1></div>
+    <div class="pull-right">
+
+    <div class="hider-ad-bar"><h1></h1></div>
+    </div>
+
+      <div id='ws-footer' style='position:absolute;top:426px;left:8px;width:588px'>
+        <form id='ws-form'>
+          <a id='ws-a' href='https://www.redfin.com/how-walk-score-works' target='_blank'></a>
+        </form>
+      </div>
+    </div>
+    <script type='text/javascript' src='http://www.walkscore.com/tile/show-walkscore-tile.php'></script>
+  </div>
+</div>

@@ -149,17 +149,22 @@ app.get("/search", function(req, res) {
       zillowAddressCall.then(function(data){
         var zpid = parseInt(data.response[0].results[0].result[0].zpid[0])
         var id = {zpid: zpid}
+
         var zillowIdCall = zillow.callApi('GetUpdatedPropertyDetails', id)
         zillowIdCall.then(function(result){
-          var zillowResult = result.response[0];
-          var zillowObj = {
-            address: zillowResult.address[0].street+" "+zillowResult.address[0].city+" "+zillowResult.address[0].state,
-            images: zillowResult.images[0].image[0],
-            lat: zillowResult.address[0].latitude[0],
-            lon: zillowResult.address[0].longitude[0]
+          if (result.message[0].code == '501'){
+              res.send("We're sorry. Unfortunately, this information is protected")
+          } else {
+            var zillowResult = result.response[0];
+            var zillowObj = {
+              address: zillowResult.address[0].street+" "+zillowResult.address[0].city+" "+zillowResult.address[0].state,
+              images: zillowResult.images[0].image[0],
+              lat: zillowResult.address[0].latitude[0],
+              lon: zillowResult.address[0].longitude[0]
+            }
+            callback(null, zillowObj)
           }
           // console.log(zillowObj)
-          callback(null, zillowObj)
         })
       })
     },
@@ -167,7 +172,7 @@ app.get("/search", function(req, res) {
       yelp.search({term: "food", location: req.query.zip_code}, function(error, data) {
         var foodArr = [];
         var score = 0;
-        // res.send(data)
+        //res.send(data)
         data.businesses.forEach(function(place){
           foodArr.push(place.rating);
         })
@@ -175,6 +180,7 @@ app.get("/search", function(req, res) {
           score = foodArr[i]+score;
         };
         score = score / foodArr.length;
+        var foodRate = score
         var foodScore = Math.round(score*50);
         yelp.search({term: "entertainment", location: req.query.zip_code}, function(error, data) {
           var ratingsArr = [];
@@ -186,9 +192,12 @@ app.get("/search", function(req, res) {
             score = ratingsArr[i]+score;
           };
           score = score / ratingsArr.length;
-          entertainmentScore = Math.round(score*50);
+          var entertainmentRate = score
+          var entertainmentScore = Math.round(score*50);
             var yelpZillowObj = {
               zillow:zillowObj,
+              yelpFoodRating: foodRate,
+              yelpEntertainmentRating: entertainmentRate,
               yelpFoodScore:foodScore,
               yelpEntertainmentScore: entertainmentScore
             }
@@ -277,7 +286,7 @@ var redirect_uri = 'http://localhost';
 app.get('/main/results',function(req, res){
 //   res.render('main/results');
 // });
-instagram.location_search({ lat: 48.565464564, lng: 2.34656589 }, function(err, result) {
+instagram.location_search({ lat: parseFloat(yelpZillowObj.zillow.lat), lng: parseFloat(yelpZillowObj.zillow.lon), distance: 5000}, function(err, result) {
     if (err) {
       console.log(err);
     } else {

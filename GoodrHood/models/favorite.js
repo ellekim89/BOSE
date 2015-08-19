@@ -8,7 +8,7 @@ module.exports = function(sequelize, DataTypes) {
     classMethods: {
       associate: function(models) {
         // associations can be defined here
-        models.favorite.belongsTo(models.user);
+        models.favorite.belongsTo(models.user, {foreignKey: 'user_id'});
       }
     }
   });

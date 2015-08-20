@@ -218,7 +218,9 @@ app.post("/favorites", function(req,res){
   // res.send(req.body);
     db.favorite.findOrCreate({
       where:{user_id: req.currentUser.id,
-             address: req.body.fave_Address}}).spread(function(favorite, created){
+             address: req.body.address,
+             rating: req.body.rating,
+             mainImage: req.body.mainImage}}).spread(function(favorite, created){
     res.redirect(req.currentUser.id + '/favorites')
   });
 });

@@ -24,6 +24,10 @@ var access_token = process.env.ACCESS_TOKEN;
 var ws_api_key = process.env.WALKSCORE_API_KEY;
 var wsapikey = process.env.WSAPIKEY;
 var app = express();
+var nodemailer = require('nodemailer');
+
+
+
 
 
 
@@ -69,6 +73,50 @@ app.use(function(req,res,next){
 app.get("/contact", function(req, res){
   res.render('main/contact');
 });
+
+
+//email
+
+app.post('/contact', function (req, res) {
+  // res.send(req.body);
+//   var mailBody = "";
+//   for(key in req.body){
+//     mailBody += key + ':\t' + req.body[key] + '\n\n';
+//   }
+//   res.send(mailBody);
+
+var transporter = nodemailer.createTransport({
+  service: 'gmail',
+  auth: {
+    user: process.env.GMAIL_EMAIL,
+    pass: process.env.GMAIL_PASSWORD
+  }
+});
+transporter.sendMail({
+  from:'req.body.name <bloxscore@gmail.com>',
+  to:'osamaasaid@gmail.com',
+  subject:req.body.subject,
+  text:req.body.message
+},function(err,info){
+//   console.log('err',err);
+//   console.log('info',info);
+
+  res.redirect('main/thanks')
+
+  });
+
+});
+
+
+
+
+///end email
+
+
+
+
+
+
 
 app.get("/team", function(req, res){
   res.render('main/team');

@@ -51,14 +51,14 @@
 
       <div class="col-md-3">
         <div class="small panel panel-default">
-        <h3 class="score-results">Proximity</h3>
+        <h3 class="score-results proximity_score">Proximity</h3>
           <h2 class="display"><%= Math.round((results.walkscore.walkscore + (results.main.info.yelpZillow.yelpFoodRating * 20) + (results.main.info.yelpZillow.yelpEntertainmentRating * 20)) / 3) %>/100</h2>
 
         </div>
       </div>
       <div class="col-md-3">
         <div class="small panel panel-default">
-        <h3 class="score-results">Social</h3>
+        <h3 class="score-results social_score">Social</h3>
           <h2 class="display">
           <% var count = 0  %>
             <% results.main.images.forEach(function(likes){ %>
@@ -70,13 +70,13 @@
       </div>
       <div class="col-md-3">
         <div class="small panel panel-default">
-        <h3 class="score-results">Price</h3>
+        <h3 class="score-results" data-toggle="tooltip" data-placement="top" title="Tooltip on top">Price</h3>
           <h2 class="display"><%= Math.round((results.walkscore.walkscore + (results.main.info.yelpZillow.yelpFoodRating * 10) + (results.main.info.yelpZillow.yelpEntertainmentRating * 10)) / 2) %>/100</h2>
         </div>
       </div>
       <div class="col-md-3">
         <div class="small panel panel-default">
-          <h3 class="score-results">Places</h3>
+          <h3 class="score-results places_score">Places</h3>
             <h2 class="display"><%= Math.round((((results.main.info.yelpZillow.yelpFoodRating + results.main.info.yelpZillow.yelpEntertainmentRating)/2)* 20)) %>/100</h2>
         </div>
       </div>

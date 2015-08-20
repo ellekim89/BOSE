@@ -12,8 +12,6 @@ $( window ).load(function() {
     $('.logout_nav').hide();
   }
 
-
-
   // $('#nav .favorites').length > 0
   console.log(currentUser);
 

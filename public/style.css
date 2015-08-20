@@ -256,11 +256,12 @@ ul .actions {
 }
 
 #mission_statement{
-  background: rgba(0, 0, 0, .6);
+  background: rgba(0, 0, 0, .5);
   margin-left: 20%;
   height: 30%;
   width: 60%;
-
+  border-radius: 5px;
+  font-size: .8em;
 }
 
 

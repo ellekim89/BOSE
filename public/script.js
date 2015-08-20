@@ -14,4 +14,12 @@ $( window ).load(function() {
   // $('#nav .favorites').length > 0
   console.log(currentUser);
 
+// progress bar begin
+$(function() {
+    $( "#progressbar" ).progressbar({
+      value: 37
+    });
+  });
+// progress bar end
+
 });

@@ -8,6 +8,7 @@ $( window ).load(function() {
     $('.signup_nav').hide();
     $('.login_nav').hide();
   } else if (currentUser === false){
+    $('.favorites_nav').hide();
     $('.logout_nav').hide();
   }
   // $('#nav .favorites').length > 0

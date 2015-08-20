@@ -3,18 +3,22 @@
 <head>
  <html>
   <head>
-    <title>BlockRater</title>
+    <title>BloxScore</title>
     <meta charset="utf-8" />
-    <!-- Latest compiled and minified CSS & JS -->
+
     <link rel="stylesheet" media="screen" href="https://netdna.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
     <script src="https://code.jquery.com/jquery.js"></script>
     <script src="https://netdna.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
     <link rel="stylesheet" href="../assets/css/main.css" />
+
     <link rel="stylesheet" href="../style.css" />
     <script src="../script.js"></script>
     <!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
+
+    <link rel="icon" type="image/png" href="favicon-32x32.png" sizes="32x32"/>
+    <link rel="icon" type="image/png" href="favicon-16x16.png" sizes="16x16"/>
+
   </head>
   <body class="landing">
     <div id="page-wrapper">
@@ -23,21 +27,29 @@
         <header id="header" class="alt">
 
 
-          <h1 style="margin-left:15px;" ><a href="/"><img class="minimizer" src="img/blockraterlogo.png"></a></h1>
+          <h1 style="margin-left:15px;" ><a href="/"><img class="logo" src="img/blockraterlogo.png"></a></h1>
           <nav id="nav">
             <ul>
               <li>
                 <a href="/<%=currentUser.id%>/favorites" class="favorites">Favorites</a>|
+
               </li>
+              |
               <li>
                 <a href="/login" class="login_nav">Login</a>|
+
               </li>
+              |
               <li>
                 <a href="/signup" class="signup_nav">Sign Up</a>|
+
               </li>
+              |
               <li>
                 <a href="/contact" class="contact">Contact</a>|
+
               </li>
+              |
               <li>
                 <a href="/team" class="team">Team</a>
               </li>
@@ -45,7 +57,7 @@
           </nav>
         </header>
 <div class="container-fluid">
-
+<br>
   <%- body  %>
 </div>
 

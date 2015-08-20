@@ -1,4 +1,6 @@
-
+#nav > ul > li:hover{
+  background-color: #37A2A9
+}
 /*HomePage*/
 
 #banner form {
@@ -153,17 +155,20 @@ ul .actions {
   position: absolute;
   background-color: #F2F2F2;
   width: 100%;
-  height: 2.0%;
+  height: 1.8em;
   /*opacity: 0.5;*/
+  border-bottom: solid black 1px
 }
 
 .hider-ad-bar{
-  margin-top: 80%;
   position: absolute;
+  margin-top: 692px;
   background-color: #F2F2F2;
+  /*background-color: black;*/
   width: 100%;
-  height: 5.3%;
-  opacity: 0.5;
+  height: 40%;
+  border-top: solid black 1px;
+  /*z-index: 99999999999;*/
 }
 
 #ws-foottext, #ws-footer a,#ws-footer a:link{
@@ -187,13 +192,19 @@ ul .actions {
 }
 
 
-.minimizer{
-  width: 10em;
+.logo{
+  width: 12em;
   height: auto;
+  margin-top: 3%;
+  /*position: absolute;*/
 }
 
-.map{
-  /*border: solid black 5px;*/
+.map-box{
+  position: absolute;
+  top: 10px;
+  width: 100%;
+  height: 200px;
+
 }
 /* End map CSS */
 

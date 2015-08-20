@@ -1,11 +1,11 @@
 <div class="centerize">
   <div class="map">
     <script type='text/javascript'>
-      var ws_industry_type = "industrial";
+      var ws_industry_type = "residential";
       var ws_wsid =  <%= apikey  %>
       var ws_lat= <%= results.main.info.yelpZillow.zillow.lat %>
       var ws_lon= <%= results.main.info.yelpZillow.zillow.lon %>
-      var ws_width = '500';
+      var ws_width = '100%';
       var ws_height = '1400';
       var ws_layout = 'vertical';
       var ws_commute = 'true';
@@ -19,9 +19,9 @@
     </script>
     <div class="text-center" id='ws-walkscore-tile'>
     <div class="hider-header"><h1></h1></div>
+    <div class="hider-ad-bar"><h1></h1></div>
     <div class="pull-right">
 
-    <div class="hider-ad-bar"><h1></h1></div>
     </div>
 
       <div id='ws-footer' style='position:absolute;top:426px;left:8px;width:588px'>

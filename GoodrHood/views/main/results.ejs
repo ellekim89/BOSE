@@ -20,7 +20,7 @@
       <div class="score">
         <form method="post" action="/favorites">
           <input type="hidden" name="fave_Address" value="<%= results.main.info.yelpZillow.zillow.address %>">
-          <input type="hidden" name="mainImage" value="<%= results.main.info.yelpZillow.zillow.images %>">
+          <input type="hidden" name="mainImage" value="<%= results.main.info.yelpZillow.zillow.images[0] %>">
           <input type="hidden" name="rating" value="<%= results.main.info.yelpZillow.zillow.images %>">
          <button class="glyphicon glyphicon-heart btn btn-success pull-right"></button>
         </form>

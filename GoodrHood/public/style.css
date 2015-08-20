@@ -252,7 +252,12 @@ ul .actions {
   width: 125px;
 }
 
-a .signup_nav{
+#mission_statement{
+  background: rgba(0, 0, 0, .6);
+  margin-left: 20%;
+  height: 30%;
+  width: 60%;
+
 }
 
 

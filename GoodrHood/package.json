@@ -30,6 +30,7 @@
     "instagram-node": "^0.5.7",
     "method-override": "^2.3.5",
     "node-zillow": "0.0.3",
+    "nodemailer": "^1.4.0",
     "pg": "^4.4.1",
     "pg-hstore": "^2.3.2",
     "request": "^2.60.0",

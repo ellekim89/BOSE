@@ -209,7 +209,7 @@ app.get("/search", function(req, res) {
         zillowIdCall.then(function(result){
           // res.send(result)
           if (result.message[0].code == '501'){
-            res.send("We're sorry. Unfortunately, this information is protected")
+
           } else if(result.message[0].code == '508') {
             res.send(result.message[0].text)
           } else if(result.message[0].code == '502'){

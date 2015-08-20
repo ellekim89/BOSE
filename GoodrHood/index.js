@@ -242,7 +242,7 @@ app.get("/search", function(req, res) {
     },
     function(zillowObj, callback){
       // res.send(zillowObj)
-      yelp.search({term: "food", location: req.query.zip_code}, function(error, data) {
+      yelp.search({term: "food", location: zillowObj.address+" "+zillowObj.zipcode}, function(error, data) {
         var foodArr = [];
         foodPhotosArr = []
         var score = 0;
@@ -258,7 +258,7 @@ app.get("/search", function(req, res) {
         score = score / foodArr.length;
         var foodRate = score
         var foodScore = Math.round(score*50);
-        yelp.search({term: "entertainment", location: req.query.zip_code}, function(error, data) {
+        yelp.search({term: 'entertainment', location: zillowObj.address+" "+zillowObj.zipcode}, function(error, data) {
           // res.send(data)
           var ratingsArr = [];
           var photosArr = [];
@@ -277,6 +277,19 @@ app.get("/search", function(req, res) {
           score = score / ratingsArr.length;
           var entertainmentRate = score
           var entertainmentScore = Math.round(score*50);
+          yelp.search({term: 'apartments', location: zillowObj.address+" "+zillowObj.zipcode}, function(error, data){
+            // res.send(data.businesses)
+            var apartmentInfo = []
+            data.businesses.forEach(function(place){
+              if( place.location.display_address[0].indexOf(zillowObj.address) != -1){
+                  apartmentInfo.push({
+                    apartmentName: place.name,
+                    apartmentRating: place.rating,
+                    apartmentSnippet: place.snippet_text
+                  })
+              }
+
+            })
             var yelpZillowObj = {
               zillow:zillowObj,
               yelpFoodRating: foodRate,
@@ -284,11 +297,14 @@ app.get("/search", function(req, res) {
               yelpFoodScore:foodScore,
               yelpEntertainmentScore: entertainmentScore,
               foodPhotos: foodPhotosArr,
-              photos: photosArr
+              photos: photosArr,
+              apartmentInfo: apartmentInfo
             };
           console.log('step 2')
-          // res.send(yelpZillowObj);
-          callback(null, yelpZillowObj);
+          res.send(yelpZillowObj);
+          // callback(null, yelpZillowObj);
+            // res.send(apartmentInfo)
+          })
         })
       })
     },

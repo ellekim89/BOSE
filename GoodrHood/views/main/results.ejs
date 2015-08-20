@@ -4,12 +4,18 @@
   </div>
 
   <div class="side-bar col-md-8"><h1>Results</h1>
-    <% results.main.images.forEach(function(image){ %>
+   <!--  <% results.main.images.forEach(function(image){ %>
       <img src="<%= image.images.thumbnail.url  %>">
-    <% }) %>
+    <% }) %> -->
 
     <div class="section overview col-md-12">
 
+          <% var proximityScore = ((results.walkscore.walkscore + (results.main.info.yelpZillow.yelpFoodRating * 20) + (results.main.info.yelpZillow.yelpEntertainmentRating * 20)) / 3 )%>
+
+          <% var priceScore = ((results.walkscore.walkscore + (results.main.info.yelpZillow.yelpFoodRating * 10) + (results.main.info.yelpZillow.yelpEntertainmentRating * 10)) / 2 )%>
+
+          <% var placesScore = ((((results.main.info.yelpZillow.yelpFoodRating + results.main.info.yelpZillow.yelpEntertainmentRating)/2)* 20))%>
+          <% var score = ((placesScore * 3.33) + (proximityScore * 3.34) + (priceScore * 3.33))%>
       <div class="score">
         <form method="post" action="/favorites">
         <input type="hidden" name="fave_Address" value="<%= results.main.info.yelpZillow.zillow.address %>">
@@ -18,46 +24,59 @@
          <button class="btn btn-success">favorite</button>
         </form>
         <h2> Score:
-        <%= results.main.info.yelpZillow.yelpFoodScore + results.main.info.yelpZillow.yelpEntertainmentScore %> </h2>
+        <%= Math.round(score) %> </h2>
         <p>
           <%= results.main.info.community_snippet %>
         </p>
 
+
           <div class="progress">
-            <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="<%= (results.main.info.yelpZillow.yelpFoodScore + results.main.info.yelpZillow.yelpEntertainmentScore)%> " aria-valuemin="0" aria-valuemax="500" style="width: <%= 100 * (results.main.info.yelpZillow.yelpFoodScore + results.main.info.yelpZillow.yelpEntertainmentScore)/500%>%;">
-              <span class="sr-only">500 Complete</span>
+            <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="<%=score%>" aria-valuemin="0" aria-valuemax="1000" style="width: <%= score/10%>%">
+              <span class="sr-only">1000 Complete</span>
             </div>
           </div>
       </div>
     </div>
 
+
       <div class="overall-score col-md-12">
         <div class="col-md-3">
           <div class="walk-score small">
-          Proximity: <%= results.walkscore.walkscore %>
+          Proximity: <%= Math.round((results.walkscore.walkscore + (results.main.info.yelpZillow.yelpFoodRating * 20) + (results.main.info.yelpZillow.yelpEntertainmentRating * 20)) / 3) %>/100
           </div>
         </div>
 
+
+
         <div class="col-md-3">
           <div class="personlity small">
-          People: Happy
+          <% var count = 0  %>
+          Social Score: <% results.main.images.forEach(function(likes){ %>
+                  <% count = likes.likes.count + count %>
+                  <% count = likes.comments.count + count %>
+          <% }); %>
+          <%= count  %>
           </div>
         </div>
 
         <div class="col-md-3">
           <div class="cost-of-living small ">
-          Price: $$$$
+          Price: <%= Math.round((results.walkscore.walkscore + (results.main.info.yelpZillow.yelpFoodRating * 10) + (results.main.info.yelpZillow.yelpEntertainmentRating * 10)) / 2) %>/100
           </div>
         </div>
 
 
         <div class="col-md-3">
           <div class="ratings sentiment small">
-          Places: <%= ((results.main.info.yelpZillow.yelpFoodRating + results.main.info.yelpZillow.yelpEntertainmentRating)/2).toFixed(2) %> Stars
+          Places: <%= Math.round((((results.main.info.yelpZillow.yelpFoodRating + results.main.info.yelpZillow.yelpEntertainmentRating)/2)* 20)) %>/100
           </div>
         </div>
       </div>
 
+<div>  <% results.main.images.forEach(function(image){ %>
+      <img src="<%= image.images.thumbnail.url  %>">
+    <% }) %>
+    </div>
 
       <div class="ratings-info">
       </div>

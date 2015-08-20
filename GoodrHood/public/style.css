@@ -4,6 +4,12 @@
 #banner form {
   margin-top: 10px;
 }
+
+/*#banner h2 {
+  background-color: gray;
+  width: 80%;
+  margin-left: 10%;
+}*/
 .input-form {
   width: 70%;
   margin-left:14%;
@@ -35,6 +41,13 @@ ul .actions {
 
 /*Results page CSS*/
 
+
+.results {
+  margin-top: 53px;
+}
+
+
+
 .side-bar {
   background-color:#E2E4D9;
   color: black;
@@ -45,17 +58,41 @@ ul .actions {
   max-height: 400px;
   /*margin-left:25%;*/
   color:#30C967;
-  background-color: #FCFCFC;
+  background-color: #F2F2F2;
 }
 .section  {
   width: 100%;
   height: 300px;
   color:black;
-  background-color: #FCFCFC;
+  background-color: #F2F2F2;
   text-align: left;
+  float: right;
+  width: 100%;
+  overflow: hidden;
 
 }
 
+.score-results{
+  background-color: #606060;
+  border: 2px solid #272727;border-radius: 2px;
+  text-align: center;
+  color: white;
+}
+
+.display {
+  color: #E1856E;
+  text-align: center;
+  font-weight: bold;
+}
+
+.panel {
+  border-radius: 15px;
+}
+
+.photo-results img {
+  width: 140px;
+  height: 140px;
+}
 
 .small {
   width: 170px;
@@ -68,7 +105,7 @@ ul .actions {
 
 /*progress bar*/
 .progress{
-  margin-top: 50px;
+  /*margin-top: 50px;*/
 }
 
 

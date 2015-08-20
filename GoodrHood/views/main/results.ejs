@@ -1,6 +1,6 @@
 
 <!-- MAP SECTION LEFT -->
- <div class="map-result col-md-4">map area
+ <div class="map-result col-md-4">
     <%- include ../shared/map.ejs %>
   </div>
 
@@ -20,6 +20,8 @@
       <div class="score">
         <form method="post" action="/favorites">
           <input type="hidden" name="fave_Address" value="<%= results.main.info.yelpZillow.zillow.address %>">
+          <input type="hidden" name="mainImage" value="<%= results.main.info.yelpZillow.zillow.images[0] %>">
+          <input type="hidden" name="rating" value="<%= results.main.info.yelpZillow.zillow.images %>">
          <button class="glyphicon glyphicon-heart btn btn-success pull-right"></button>
         </form>
 
@@ -80,8 +82,11 @@
 
 <!-- GOOGLE SCORES/WORD CLOUD -->
     <div class="well">
-    <h2>Community Reviews</h2>
-
+    <h2>Community Ratings</h2>
+    <% results.main.images.forEach(function(image){ %>
+      <img src="<%= image.images.thumbnail.url  %>">
+      <% }) %>
+    </div>
 
 <!-- INSTAGRAM PHOTOS -->
     <div class="well photo-results">
@@ -92,7 +97,7 @@
     </div>
 <!-- YELP PHOTOS -->
     <div class="well photo-results">
-    <h2>Places Nearby</h2>
+    <h2>Entertainment Nearby</h2>
     <% results.main.info.yelpZillow.foodPhotos.forEach(function(image){ %>
       <img src="<%= image  %>">
       <% }) %>

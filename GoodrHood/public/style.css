@@ -29,26 +29,25 @@ margin-top: 50px;
 
 .search {
   margin-top: 10px;
-  border: solid black 5px;
+  width: 200px;
+  -moz-box-shadow:    3px 3px 1px 1px #272727;
+  -webkit-box-shadow: 3px 3px 1px 1px #272727;
+  box-shadow:         3px 3px 1px 1px #272727;
 }
 
 ul .actions {
   width: 80%;
 }
-
+/*Favorites*/
+.favorite {
+  height:250px;
+}
 /*Layouts*/
 #page-wrapper {
   margin-top: 20px;
 }
 
 /*Results page CSS*/
-
-
-.results {
-  margin-top: 53px;
-}
-
-
 
 .side-bar {
   background-color:#E2E4D9;

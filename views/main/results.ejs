@@ -11,6 +11,8 @@
     <div class="section overview col-md-12">
 
 
+          <% var noApartments = results.main.info.yelpZillow.apartmentInfo.length < 1 %>
+
           <% var proximityScore = ((results.walkscore.walkscore + (results.main.info.yelpZillow.yelpFoodRating * 20) + (results.main.info.yelpZillow.yelpEntertainmentRating * 20)) / 3 )%>
 
           <% var priceScore = ((results.walkscore.walkscore + (results.main.info.yelpZillow.yelpFoodRating * 10) + (results.main.info.yelpZillow.yelpEntertainmentRating * 10)) / 2 )%>
@@ -22,23 +24,34 @@
         <form method="post" action="/favorites">
           <input type="hidden" name="address" value="<%= results.main.info.yelpZillow.zillow.address %>">
           <input type="hidden" name="zipcode" value="<%= results.main.info.yelpZillow.zillow.zipcode %>">
-          <input type="hidden" name="rating" value="<%= parseInt(results.main.info.yelpZillow.apartmentInfo[0].apartmentRating) %>">
+
           <input type="hidden" name="mainImage" value="<%= results.main.info.yelpZillow.zillow.images[0] %>">
+
+          <% if(noApartments){ %>
+            <input type="hidden" name="rating" value="http://cliparts.co/cliparts/di9/X5z/di9X5z94T.png">
+          <% } else {  %>
+            <input type="hidden" name="rating" value="<%= parseInt(results.main.info.yelpZillow.apartmentInfo[0].apartmentRating) %>">
+          <% }  %>
 
          <button class="glyphicon glyphicon-heart btn btn-success pull-right"></button>
         </form>
-
+        <% if(noApartments){ %>
+        <h3><%= results.main.info.yelpZillow.zillow.neighborhood %></h3>
+        <% } else { %>
         <h3><%= results.main.info.yelpZillow.apartmentInfo[0].apartmentName %></h3>
+        <% }  %>
         <h2>
           Score:
           <%= Math.round(score) %>
         </h2>
 
-          <div class="progress">
-            <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="<%=score%>" aria-valuemin="0" aria-valuemax="1000" style="width: <%= score/10%>%">
+         <!--  <div class="progress">
+
               <span class="sr-only">1000 Complete</span>
             </div>
-          </div>
+          </div> -->
+          <div id="progressbar"></div>
+          <input id='score' type='hidden' value="<% Math.floor(score/10) %>">
         <p>
           <%= results.main.info.community_snippet %>
         </p>
@@ -87,22 +100,38 @@
 
 <!-- YelpSCORES/WORD CLOUD -->
     <div class="well">
-    <h2>Community Ratings:
 
-    <% for (var i=1; i<results.main.info.yelpZillow.apartmentInfo[0].apartmentRating; i++){ %>
-    <img src="../img/z-star.png" class="star">
+    <% if(noApartments){ %>
+      <h2>Community Ratings: <%= results.main.info.yelpZillow.yelpFoodRating %>
+
+
+    <%  } else {  %>
+      <h2>Community Ratings: <%= results.main.info.yelpZillow.apartmentInfo[0].apartmentRating %>
+        <% for (var i=1; i<results.main.info.yelpZillow.apartmentInfo[0].apartmentRating; i++){ %>
+          <img src="../img/z-star.png" class="star">
+        <% } %>
     <% } %>
     </h2>
 
-        <%= results.main.info.yelpZillow.apartmentInfo[0].apartmentSnippet %>
+
+
+
+    <%if(noApartments){  %>
+    <% } else { %>
+      <%= results.main.info.yelpZillow.apartmentInfo[0].apartmentSnippet %>
+    <% } %>
     </div>
 
 <!-- INSTAGRAM PHOTOS -->
     <div class="well photo-results">
     <h2>People Nearby</h2>
-    <% results.main.images.forEach(function(image){ %>
+    <% if(results.main.images.length < 1){ %>
+    <img src="http://www.clipartbest.com/cliparts/ncB/XBX/ncBXBXgBi.png"><p>No Community photos for <%= results.main.info.yelpZillow.zillow.address  %>, check back soon!</p>
+    <% } else { %>
+      <% results.main.images.forEach(function(image){ %>
       <img src="<%= image.images.thumbnail.url  %>">
       <% }) %>
+    <% } %>
     </div>
 <!-- YELP PHOTOS -->
     <div class="well photo-results">
@@ -114,10 +143,18 @@
 <!-- Home Photos -->
     <div class="well photo-results">
     <h2>Home Photos</h2>
-    <% results.main.info.yelpZillow.zillow.images.forEach(function(image){ %>
-      <img src="<%= image  %>">
+    <% if(typeof results.main.info.yelpZillow.zillow.images == "undefined"){ %>
+      <img src="http://cliparts.co/cliparts/di9/X5z/di9X5z94T.png"><p>No Location photos for <%= results.main.info.yelpZillow.zillow.address  %>, check back soon!</p>
+    <% } else { %>
+      <% results.main.info.yelpZillow.zillow.images.forEach(function(image){ %>
+        <img src="<%= image  %>">
       <% }) %>
+    <% }  %>
     </div>
-
   </div>
 </div>
+
+
+
+
+

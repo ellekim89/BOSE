@@ -406,7 +406,7 @@ app.get("/search", function(req, res) {
       });
     },
     function(requestObj, callback){
-      instagram.location_search({ lat: parseFloat(requestObj.yelpZillow.zillow.lat), lng: parseFloat(requestObj.yelpZillow.zillow.lon) }, function(err, result) {
+      instagram.location_search({ lat: parseFloat(requestObj.yelpZillow.zillow.lat), lng: parseFloat(requestObj.yelpZillow.zillow.lon), distance:5000}, function(err, result) {
         if (err) {
           res.send(err+"no sam");
         } else {
@@ -443,7 +443,9 @@ app.get("/search", function(req, res) {
     }
   ], function(err,results){
 
+
     //res.send(results)
+
     res.render('main/results', {results:results, apikey:parseInt(ws_api_key)})
 
   })
@@ -460,3 +462,6 @@ app.get('/logout',function(req,res){
 
 
 app.listen(process.env.PORT || 3000);
+
+
+

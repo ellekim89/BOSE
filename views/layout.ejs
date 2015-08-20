@@ -13,6 +13,9 @@
     </script>
     <script src="https://code.jquery.com/jquery.js"></script>
     <script src="https://netdna.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+    <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+    <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="stylesheet" href="../assets/css/main.css" />
 
@@ -35,23 +38,30 @@
           <nav id="nav">
             <ul>
               <li class="favorites_nav">
-                <a href="/<%=currentUser.id%>/favorites" class="favorites_nav">Favorites</a>|
+                <a href="/<%=currentUser.id%>/favorites" class="favorites_nav">Favorites</a>
               </li>
+
+              |
 
               <li class = "contact_nav">
-                <a href="/contact" class="contact_nav">Contact</a>|
+                <a href="/contact" class="contact_nav">Contact</a>
 
               </li>
+
+              |
 
               <li class = "team_nav">
-                <a href="/team" class="team_nav">Team</a>|
+                <a href="/team" class="team_nav">Team</a>
               </li>
 
+              |
 
               <li class = "signup_nav">
-                <a href="/signup" class="signup_nav">Sign Up</a>|
+                <a href="/signup" class="signup_nav">Sign Up</a>
               </li>
-
+              <% if(!currentUser) { %>
+              |
+              <% } %>
               <li class="login_nav">
                 <a href="/login" class="login_nav">Login</a>
 

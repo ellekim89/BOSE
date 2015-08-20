@@ -198,7 +198,15 @@ ul .actions {
   float: right;
 }
 
+.profilePic img{
+  border-radius: 100px;
+  border: 1px black solid;
+  height: 125px;
+  width: 125px;
+}
 
+a .signup_nav{
+}
 
 
 

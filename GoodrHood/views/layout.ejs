@@ -6,13 +6,14 @@
     <title>BlockRater</title>
     <meta charset="utf-8" />
     <!-- Latest compiled and minified CSS & JS -->
-     <link rel="stylesheet" href="../style.css" />
     <link rel="stylesheet" media="screen" href="https://netdna.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
     <script src="https://code.jquery.com/jquery.js"></script>
     <script src="https://netdna.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
     <link rel="stylesheet" href="../assets/css/main.css" />
+    <link rel="stylesheet" href="../style.css" />
+    <script src="../script.js"></script>
     <!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
   </head>
   <body class="landing">
@@ -26,19 +27,19 @@
           <nav id="nav">
             <ul>
               <li>
-                <a href="/:id/favorites" class="">Favorites</a>|
+                <a href="/<%=currentUser.id%>/favorites" class="favorites">Favorites</a>|
               </li>
               <li>
-                <a href="/login" class="">Login</a>|
+                <a href="/login" class="login_nav">Login</a>|
               </li>
               <li>
-                <a href="/signup" class="">Sign Up</a>|
+                <a href="/signup" class="signup_nav">Sign Up</a>|
               </li>
               <li>
-                <a href="/contact" class="">Contact</a>|
+                <a href="/contact" class="contact">Contact</a>|
               </li>
               <li>
-                <a href="/team" class="">Team</a>
+                <a href="/team" class="team">Team</a>
               </li>
             </ul>
           </nav>

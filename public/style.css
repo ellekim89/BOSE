@@ -108,7 +108,22 @@ ul .actions {
 
 }
 
+/*FAVORITES PAGE */
 
+.fav-address {
+  color: white;
+  margin-top: 70%;
+}
+
+.fav-rating {
+  color: white;
+  font-weight: bold;
+
+}
+.star-small {
+  height:20px;
+  width:20px;
+}
 /*progress bar*/
 .progress{
   /*margin-top: 50px;*/

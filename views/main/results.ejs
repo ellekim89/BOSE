@@ -21,9 +21,9 @@
       <div class="score">
         <form method="post" action="/favorites">
           <input type="hidden" name="address" value="<%= results.main.info.yelpZillow.zillow.address %>">
-
+          <input type="hidden" name="zipcode" value="<%= results.main.info.yelpZillow.zillow.zipcode %>">
           <input type="hidden" name="rating" value="<%= parseInt(results.main.info.yelpZillow.apartmentInfo[0].apartmentRating) %>">
-          <input type="hidden" name="mainImage" value="<%= results.main.info.yelpZillow.photos[0] %>">
+          <input type="hidden" name="mainImage" value="<%= results.main.info.yelpZillow.zillow.images[0] %>">
 
          <button class="glyphicon glyphicon-heart btn btn-success pull-right"></button>
         </form>
@@ -87,9 +87,13 @@
 
 <!-- YelpSCORES/WORD CLOUD -->
     <div class="well">
-    <h2>Community Ratings: <%= results.main.info.yelpZillow.apartmentInfo[0].apartmentRating %>
-    <img src="../img/z-star.png" class="star">'s
+    <h2>Community Ratings:
+
+    <% for (var i=1; i<results.main.info.yelpZillow.apartmentInfo[0].apartmentRating; i++){ %>
+    <img src="../img/z-star.png" class="star">
+    <% } %>
     </h2>
+
         <%= results.main.info.yelpZillow.apartmentInfo[0].apartmentSnippet %>
     </div>
 

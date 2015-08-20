@@ -9,9 +9,11 @@
           <div class="box col-md-12">
 
             <% favorites.forEach(function(result){ %>
-             <div class="well col-md-4 favorite">
-              <%= result.address %>
-              <%= result.mainImage  %>
+             <div class="well col-md-4 favorite" style="background-image:url('<%= result.mainImage  %>')">
+              <h4 class="fav-address"><%= result.address %>
+              <!-- <img src="<%= result.mainImage  %>"> -->
+              <% for (var i=0; i<result.rating; i++){  %><img src="../img/z-star.png" class="star-small pull-right">
+             <% } %>
               </div>
             <% }); %>
 

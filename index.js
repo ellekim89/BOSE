@@ -371,10 +371,10 @@ app.get("/search", function(req, res) {
     function(yelpZillowObj, callback){
       console.log(yelpZillowObj.zillow.neighborhood)
       var neighborhood = yelpZillowObj.zillow.neighborhood.toLowerCase().replace("north " || "east " || "south " || "west ", "");
-      console.log(neighborhood)
+      console.log(typeof neighborhood)
       if(neighborhood.indexOf("downtown") != -1){
         var url = 'http://www.visitseattle.org/neighborhoods/downtown-seattle'
-      } else if(neighborhood.indexOf( "beacon hill" || "genesee") != -1 ){
+      } else if(neighborhood.indexOf("genesee") != -1 ){
         var url = 'http://www.visitseattle.org/neighborhoods/columbia-city/'
       } else if(neighborhood.indexOf('first hill') != -1) {
         var url = 'http://www.visitseattle.org/neighborhoods/capitol-hill/'

@@ -1,11 +1,45 @@
 <h1>Favorites</h1>
+<!-- Main -->
+        <section id="main" class="container">
+          <header class="login-screen">
+            <h2>Favorites</h2>
+            <p>Love where you live!</p>
+          </header>
+          <%= name %>'s favorites
+          <div class="box">
 
-<% myFavorite.forEach(function(result) { %>
-<div class="well">
+            <% favorites.forEach(function(result){ %>
+             <div class="well">
+              <%= result.address %>
+              </div>
+            <% }); %>
 
-  <%= result.address %>
-  <%= result.zipcode %>
+               </div>
+        </section>
 
-</div>
-
-<% }); %>
+         <section class="box special features">
+            <div class="features-row">
+              <section>
+                <span class="icon major fa-bolt accent2"></span>
+                <h3>Price</h3>
+                <p>Integer volutpat ante et accumsan commophasellus sed aliquam feugiat lorem aliquet ut enim rutrum phasellus iaculis accumsan dolore magna aliquam veroeros.</p>
+              </section>
+              <section>
+                <span class="icon major fa-area-chart accent3"></span>
+                <h3>Proximity</h3>
+                <p>Integer volutpat ante et accumsan commophasellus sed aliquam feugiat lorem aliquet ut enim rutrum phasellus iaculis accumsan dolore magna aliquam veroeros.</p>
+              </section>
+            </div>
+            <div class="features-row">
+              <section>
+                <span class="icon major fa-cloud accent4"></span>
+                <h3>People</h3>
+                <p>Integer volutpat ante et accumsan commophasellus sed aliquam feugiat lorem aliquet ut enim rutrum phasellus iaculis accumsan dolore magna aliquam veroeros.</p>
+              </section>
+              <section>
+                <span class="icon major fa-lock accent5"></span>
+                <h3>Places</h3>
+                <p>Integer volutpat ante et accumsan commophasellus sed aliquam feugiat lorem aliquet ut enim rutrum phasellus iaculis accumsan dolore magna aliquam veroeros.</p>
+              </section>
+            </div>
+          </section>

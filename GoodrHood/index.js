@@ -207,7 +207,9 @@ app.get("/search", function(req, res) {
               address: zillowResult.address[0].street+" "+zillowResult.address[0].city+" "+zillowResult.address[0].state,
               images: zillowResult.images[0].image[0],
               lat: zillowResult.address[0].latitude[0],
-              lon: zillowResult.address[0].longitude[0]
+              lon: zillowResult.address[0].longitude[0],
+              zipcode: zillowResult.address[0].zipcode[0]
+
             }
             console.log('step 1')
             callback(null, zillowObj)
@@ -219,10 +221,12 @@ app.get("/search", function(req, res) {
     function(zillowObj, callback){
       yelp.search({term: "food", location: req.query.zip_code}, function(error, data) {
         var foodArr = [];
+        foodPhotosArr = []
         var score = 0;
         //res.send(data)
         data.businesses.forEach(function(place){
           foodArr.push(place.rating);
+          foodPhotosArr.push(place.image_url.replace("ms.jpg","l.jpg"))
         })
         for (var i = 0; i < foodArr.length; i++) {
           score = foodArr[i]+score;
@@ -230,11 +234,13 @@ app.get("/search", function(req, res) {
         score = score / foodArr.length;
         var foodRate = score
         var foodScore = Math.round(score*50);
-        yelp.search({term: "entertainment", location: req.query.zip_code}, function(error, data) {
+        yelp.search({term: req.body.address, location: req.query.zip_code}, function(error, data) {
           var ratingsArr = [];
+          var photosArr = [];
           var score = 0;
           data.businesses.forEach(function(place){
             ratingsArr.push(place.rating);
+            photosArr.push(place.image_url.replace("ms.jpg","l.jpg"))
           })
           for (var i = 0; i < ratingsArr.length; i++) {
             score = ratingsArr[i]+score;
@@ -249,19 +255,23 @@ app.get("/search", function(req, res) {
               yelpFoodScore:foodScore,
               yelpEntertainmentScore: entertainmentScore,
               neighborhood: data.businesses[0].location.neighborhoods[0],
-            }
+              foodPhotos: foodPhotosArr,
+              photos: photosArr
+            };
           console.log('step 2')
+          // res.send(yelpZillowObj);
           callback(null, yelpZillowObj);
         })
       })
     },
     function(yelpZillowObj, callback){
-      console.log(yelpZillowObj.neighborhood.toString)
-
-      if(yelpZillowObj.neighborhoods == 'Downtown'){
-      var url = 'http://www.visitseattle.org/neighborhoods/'+yelpZillowObj.neighborhood+'-seattle'
+      console.log(yelpZillowObj.neighborhood)
+      var neighborhood = yelpZillowObj.neighborhood.toLowerCase();
+      console.log(neighborhood)
+      if(yelpZillowObj.neighborhood == "Downtown"){
+      var url = 'http://www.visitseattle.org/neighborhoods/'+neighborhood+'-seattle'
       }else{
-      var url = 'http://www.visitseattle.org/neighborhoods/'+yelpZillowObj.neighborhood
+      var url = 'http://www.visitseattle.org/neighborhoods/'+neighborhood.split(' ').join('-')
       };
       console.log(url)
       request(url, function (error, response, data) {
@@ -305,7 +315,7 @@ app.get("/search", function(req, res) {
   })
     },
     function(finalObj, callback){
-      console.log(process.env.WALKSCORE_KEY)
+      // res.send(finalObj)
       var url = 'http://api.walkscore.com/score?format=json&address='+finalObj.info.yelpZillow.zillow.address.split(' ').join('%20')+'&lat='+parseFloat(finalObj.info.yelpZillow.zillow.lat)+'&lon='+parseFloat(finalObj.info.yelpZillow.zillow.lon)+'&wsapikey='+wsapikey;
       request(url, function(err, response, data){
         if(data){

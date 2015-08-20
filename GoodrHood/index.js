@@ -46,8 +46,7 @@ instagram.use({
 //   client_secret: client_secret
 // });
 app.use(function(req,res,next){
-  //req.session.user = 3;
-
+  //req.session.user = 1;
   if(req.session.user){
     db.user.findById(req.session.user).then(function(user){
       req.currentUser = user;
@@ -194,52 +193,58 @@ app.get("/", function(req, res){
 app.get("/search", function(req, res) {
   async.waterfall([
     function(callback){
-      var params = {
-        address: req.query.address,
-        citystatezip: "Seattle, WA " + req.query.zip_code
-      };
-      var zillowAddressCall = zillow.callApi('GetSearchResults', params);
-      zillowAddressCall.then(function(data){
-        // console.log(data)
-        // res.send(data)
-        var zpid = parseInt(data.response[0].results[0].result[0].zpid[0])
-        var id = {zpid: zpid}
-        var zData = data.response[0].results[0].result[0]
-        var zillowIdCall = zillow.callApi('GetUpdatedPropertyDetails', id)
-        zillowIdCall.then(function(result){
-          // res.send(result)
-          if (result.message[0].code == '501'){
-
-          } else if(result.message[0].code == '508') {
-            res.send(result.message[0].text)
-          } else if(result.message[0].code == '502'){
-            console.log('we are here 502')
-            var zillowObj = {
-              address: zData.address[0].street[0],
-              lat: zData.address[0].latitude[0],
-              lon: zData.address[0].longitude[0],
-              zipcode: zData.address[0].zipcode[0],
-              neighborhood: zData.localRealEstate[0].region[0].$.name
+      if(!req.query.address || !req.query.zip_code){
+        req.flash('danger', 'Please enter a valid address')
+        res.redirect('/')
+      } else {
+        var params = {
+          address: req.query.address,
+          citystatezip: "Seattle, WA " + req.query.zip_code
+        };
+        var zillowAddressCall = zillow.callApi('GetSearchResults', params);
+        zillowAddressCall.then(function(data){
+          // console.log(data)
+          // res.send(data)
+          var zpid = parseInt(data.response[0].results[0].result[0].zpid[0])
+          var id = {zpid: zpid}
+          var zData = data.response[0].results[0].result[0]
+          var zillowIdCall = zillow.callApi('GetUpdatedPropertyDetails', id)
+          zillowIdCall.then(function(result){
+            // res.send(result)
+            if (result.message[0].code == '501'){
+              req.flash('danger',"That listing is protected. Please enter a new address or try Zillow.com")
+              res.redirect("/")
+            } else if(result.message[0].code == '508') {
+              req.flash('danger',"No exact match found for that address. Can you be more specific?")
+            } else if(result.message[0].code == '502'){
+              console.log('we are here 502')
+              var zillowObj = {
+                address: zData.address[0].street[0],
+                lat: zData.address[0].latitude[0],
+                lon: zData.address[0].longitude[0],
+                zipcode: zData.address[0].zipcode[0],
+                neighborhood: zData.localRealEstate[0].region[0].$.name
+              }
+              console.log('step 1')
+              callback(null, zillowObj)
+            } else {
+              console.log("we are here 0")
+              var zillowResult = result.response[0];
+              var zillowObj = {
+                address: zillowResult.address[0].street[0],
+                images: zillowResult.images[0].image[0].url,
+                lat: zillowResult.address[0].latitude[0],
+                lon: zillowResult.address[0].longitude[0],
+                zipcode: zillowResult.address[0].zipcode[0],
+                neighborhood: zData.localRealEstate[0].region[0].$.name
+              }
+              // res.send(zillowObj)
+              console.log('step 1')
+              callback(null, zillowObj)
             }
-            console.log('step 1')
-            callback(null, zillowObj)
-          } else {
-            console.log("we are here 0")
-            var zillowResult = result.response[0];
-            var zillowObj = {
-              address: zillowResult.address[0].street[0],
-              images: zillowResult.images[0].image[0].url,
-              lat: zillowResult.address[0].latitude[0],
-              lon: zillowResult.address[0].longitude[0],
-              zipcode: zillowResult.address[0].zipcode[0],
-              neighborhood: zData.localRealEstate[0].region[0].$.name
-            }
-            // res.send(zillowObj)
-            console.log('step 1')
-            callback(null, zillowObj)
-          }
+          })
         })
-      })
+      }
     },
     function(zillowObj, callback){
       // res.send(zillowObj)
@@ -378,8 +383,8 @@ app.get("/search", function(req, res) {
     }
   ], function(err,results){
 
-     //res.send(results)
-    res.render('main/results', {results:results, apikey:parseInt(ws_api_key)})
+     res.send(results)
+    // res.render('main/results', {results:results, apikey:parseInt(ws_api_key)})
 
   })
 });

@@ -1,12 +1,11 @@
 
+<!-- MAP SECTION LEFT -->
  <div class="map-result col-md-4">map area
     <%- include ../shared/map.ejs %>
   </div>
 
-  <div class="side-bar col-md-8"><h1>Results</h1>
-   <!--  <% results.main.images.forEach(function(image){ %>
-      <img src="<%= image.images.thumbnail.url  %>">
-    <% }) %> -->
+<!-- RESULTS SECTION RIGHT -->
+  <div class="side-bar col-md-8 results">
 
     <div class="section overview col-md-12">
 
@@ -16,69 +15,94 @@
 
           <% var placesScore = ((((results.main.info.yelpZillow.yelpFoodRating + results.main.info.yelpZillow.yelpEntertainmentRating)/2)* 20))%>
           <% var score = ((placesScore * 3.33) + (proximityScore * 3.34) + (priceScore * 3.33))%>
+
       <div class="score">
         <form method="post" action="/favorites">
-        <input type="hidden" name="fave_Address" value="<%= results.main.info.yelpZillow.zillow.address %>">
-
-
-         <button class="btn btn-success">favorite</button>
+          <input type="hidden" name="fave_Address" value="<%= results.main.info.yelpZillow.zillow.address %>">
+         <button class="glyphicon glyphicon-heart btn btn-success pull-right"></button>
         </form>
-        <h2> Score:
-        <%= Math.round(score) %> </h2>
-        <p>
-          <%= results.main.info.community_snippet %>
-        </p>
 
+        <h2> Score:
+          <%= Math.round(score) %>
+        </h2>
 
           <div class="progress">
             <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="<%=score%>" aria-valuemin="0" aria-valuemax="1000" style="width: <%= score/10%>%">
               <span class="sr-only">1000 Complete</span>
             </div>
           </div>
+        <p>
+          <%= results.main.info.community_snippet %>
+        </p>
       </div>
+
     </div>
 
 
       <div class="overall-score col-md-12">
-        <div class="col-md-3">
-          <div class="walk-score small">
-          Proximity: <%= Math.round((results.walkscore.walkscore + (results.main.info.yelpZillow.yelpFoodRating * 20) + (results.main.info.yelpZillow.yelpEntertainmentRating * 20)) / 3) %>/100
-          </div>
+
+      <div class="col-md-3">
+        <div class="small panel panel-default">
+        <h3 class="score-results">Proximity</h3>
+          <h2 class="display"><%= Math.round((results.walkscore.walkscore + (results.main.info.yelpZillow.yelpFoodRating * 20) + (results.main.info.yelpZillow.yelpEntertainmentRating * 20)) / 3) %>/100</h2>
+
         </div>
-
-
-
-        <div class="col-md-3">
-          <div class="personlity small">
+      </div>
+      <div class="col-md-3">
+        <div class="small panel panel-default">
+        <h3 class="score-results">Social</h3>
+          <h2 class="display">
           <% var count = 0  %>
-          Social Score: <% results.main.images.forEach(function(likes){ %>
+            <% results.main.images.forEach(function(likes){ %>
                   <% count = likes.likes.count + count %>
                   <% count = likes.comments.count + count %>
           <% }); %>
-          <%= count  %>
-          </div>
+          <%= count  %></h2>
         </div>
-
-        <div class="col-md-3">
-          <div class="cost-of-living small ">
-          Price: <%= Math.round((results.walkscore.walkscore + (results.main.info.yelpZillow.yelpFoodRating * 10) + (results.main.info.yelpZillow.yelpEntertainmentRating * 10)) / 2) %>/100
-          </div>
+      </div>
+      <div class="col-md-3">
+        <div class="small panel panel-default">
+        <h3 class="score-results">Price</h3>
+          <h2 class="display"><%= Math.round((results.walkscore.walkscore + (results.main.info.yelpZillow.yelpFoodRating * 10) + (results.main.info.yelpZillow.yelpEntertainmentRating * 10)) / 2) %>/100</h2>
         </div>
-
-
-        <div class="col-md-3">
-          <div class="ratings sentiment small">
-          Places: <%= Math.round((((results.main.info.yelpZillow.yelpFoodRating + results.main.info.yelpZillow.yelpEntertainmentRating)/2)* 20)) %>/100
-          </div>
+      </div>
+      <div class="col-md-3">
+        <div class="small panel panel-default">
+          <h3 class="score-results">Places</h3>
+            <h2 class="display"><%= Math.round((((results.main.info.yelpZillow.yelpFoodRating + results.main.info.yelpZillow.yelpEntertainmentRating)/2)* 20)) %>/100</h2>
         </div>
       </div>
 
-<div>  <% results.main.images.forEach(function(image){ %>
+
+
+      </div>
+
+<!-- GOOGLE SCORES/WORD CLOUD -->
+    <div class="well">
+    <h2>Community Reviews</h2>
+
+
+<!-- INSTAGRAM PHOTOS -->
+    <div class="well photo-results">
+    <h2>People Nearby</h2>
+    <% results.main.images.forEach(function(image){ %>
       <img src="<%= image.images.thumbnail.url  %>">
-    <% }) %>
+      <% }) %>
+    </div>
+<!-- YELP PHOTOS -->
+    <div class="well photo-results">
+    <h2>Places Nearby</h2>
+    <% results.main.info.yelpZillow.foodPhotos.forEach(function(image){ %>
+      <img src="<%= image  %>">
+      <% }) %>
+    </div>
+<!-- Home Photos -->
+    <div class="well photo-results">
+    <h2>Home Photos</h2>
+    <% results.main.info.yelpZillow.zillow.images.url.forEach(function(image){ %>
+      <img src="<%= image  %>">
+      <% }) %>
     </div>
 
-      <div class="ratings-info">
-      </div>
-    </div>
   </div>
+</div>

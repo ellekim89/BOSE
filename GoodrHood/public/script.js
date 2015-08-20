@@ -4,5 +4,13 @@ $( window ).load(function() {
     $(this).css('background-color', '#37A2A9');
 }).fadeIn('slow', 1);
 
+  if(currentUser != false){
+    $('.signup_nav').hide();
+    $('.login_nav').hide();
+  } else if (currentUser === false){
+    $('.logout_nav').hide();
+  }
+  // $('#nav .favorites').length > 0
+  console.log(currentUser);
 
 });

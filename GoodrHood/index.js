@@ -46,7 +46,7 @@ instagram.use({
 //   client_secret: client_secret
 // });
 app.use(function(req,res,next){
-  req.session.user = 1;
+  //req.session.user = 1;
   if(req.session.user){
     db.user.findById(req.session.user).then(function(user){
       req.currentUser = user;
@@ -61,6 +61,13 @@ app.use(function(req,res,next){
 
 app.use(function(req,res,next){
   res.locals.currentUser = req.currentUser;
+  if(req.currentUser){
+    var cleanUser = req.currentUser.get();
+    delete cleanUser.password;
+  }else{
+    var cleanUser = false;
+  }
+  res.locals.cleanUser = cleanUser;
   res.locals.alerts = req.flash();
   next();
 });

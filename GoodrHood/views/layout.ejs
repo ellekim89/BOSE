@@ -3,10 +3,14 @@
 <head>
  <html>
   <head>
+
     <title>BloxScore</title>
     <meta charset="utf-8" />
 
     <link rel="stylesheet" media="screen" href="https://netdna.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+    <script>
+      var currentUser = <%- JSON.stringify(cleanUser) %>
+    </script>
     <script src="https://code.jquery.com/jquery.js"></script>
     <script src="https://netdna.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -30,28 +34,31 @@
           <h1 style="margin-left:15px;" ><a href="/"><img class="logo" src="img/blockraterlogo.png"></a></h1>
           <nav id="nav">
             <ul>
-              <li>
-                <a href="/<%=currentUser.id%>/favorites" class="favorites">Favorites</a>|
+              <li class="favorites_nav">
+                <a href="/<%=currentUser.id%>/favorites" class="favorites_nav">Favorites</a>|
+              </li>
+
+              <li class = "contact_nav">
+                <a href="/contact" class="contact_nav">Contact</a>|
 
               </li>
-              |
-              <li>
-                <a href="/login" class="login_nav">Login</a>|
 
+              <li class = "team_nav">
+                <a href="/team" class="team_nav">Team</a>|
               </li>
-              |
-              <li>
+
+
+              <li class = "signup_nav">
                 <a href="/signup" class="signup_nav">Sign Up</a>|
+              </li>
+
+              <li class="login_nav">
+                <a href="/login" class="login_nav">Login</a>
 
               </li>
-              |
-              <li>
-                <a href="/contact" class="contact">Contact</a>|
 
-              </li>
-              |
-              <li>
-                <a href="/team" class="team">Team</a>
+              <li class = "logout_nav">
+                <a href="/logout" class="logout_nav">Log Out</a>
               </li>
             </ul>
           </nav>

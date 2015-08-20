@@ -10,6 +10,7 @@
 
     <div class="section overview col-md-12">
 
+
           <% var proximityScore = ((results.walkscore.walkscore + (results.main.info.yelpZillow.yelpFoodRating * 20) + (results.main.info.yelpZillow.yelpEntertainmentRating * 20)) / 3 )%>
 
           <% var priceScore = ((results.walkscore.walkscore + (results.main.info.yelpZillow.yelpFoodRating * 10) + (results.main.info.yelpZillow.yelpEntertainmentRating * 10)) / 2 )%>
@@ -19,13 +20,17 @@
 
       <div class="score">
         <form method="post" action="/favorites">
-          <input type="hidden" name="fave_Address" value="<%= results.main.info.yelpZillow.zillow.address %>">
-          <input type="hidden" name="mainImage" value="<%= results.main.info.yelpZillow.zillow.images[0] %>">
-          <input type="hidden" name="rating" value="<%= results.main.info.yelpZillow.zillow.images %>">
+          <input type="hidden" name="address" value="<%= results.main.info.yelpZillow.zillow.address %>">
+
+          <input type="hidden" name="rating" value="<%= parseInt(results.main.info.yelpZillow.apartmentInfo[0].apartmentRating) %>">
+          <input type="hidden" name="mainImage" value="<%= results.main.info.yelpZillow.photos[0] %>">
+
          <button class="glyphicon glyphicon-heart btn btn-success pull-right"></button>
         </form>
 
-        <h2> Score:
+        <h3><%= results.main.info.yelpZillow.apartmentInfo[0].apartmentName %></h3>
+        <h2>
+          Score:
           <%= Math.round(score) %>
         </h2>
 
@@ -80,12 +85,12 @@
 
       </div>
 
-<!-- GOOGLE SCORES/WORD CLOUD -->
+<!-- YelpSCORES/WORD CLOUD -->
     <div class="well">
-    <h2>Community Ratings</h2>
-    <% results.main.images.forEach(function(image){ %>
-      <img src="<%= image.images.thumbnail.url  %>">
-      <% }) %>
+    <h2>Community Ratings: <%= results.main.info.yelpZillow.apartmentInfo[0].apartmentRating %>
+    <img src="../img/z-star.png" class="star">'s
+    </h2>
+        <%= results.main.info.yelpZillow.apartmentInfo[0].apartmentSnippet %>
     </div>
 
 <!-- INSTAGRAM PHOTOS -->

@@ -107,9 +107,13 @@ transporter.sendMail({
 },function(err,info){
 //   console.log('err',err);
 //   console.log('info',info);
-
-  res.redirect('/thanks')
-
+  if (!req.body.message){
+    req.flash("danger","Message can't be empty.");
+    res.redirect('/contact')
+  }
+  else{
+    res.redirect('/thanks')
+  }
   });
 
 });

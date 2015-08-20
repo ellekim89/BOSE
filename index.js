@@ -220,6 +220,7 @@ app.post("/favorites", function(req,res){
       where:{user_id: req.currentUser.id,
              address: req.body.address,
              rating: req.body.rating,
+             zipcode: req.body.zipcode,
              mainImage: req.body.mainImage}}).spread(function(favorite, created){
     res.redirect(req.currentUser.id + '/favorites')
   });
@@ -303,6 +304,7 @@ app.get("/search", function(req, res) {
     function(zillowObj, callback){
       // res.send(zillowObj)
       yelp.search({term: "food", location: zillowObj.address+" "+zillowObj.zipcode}, function(error, data) {
+        // res.send(data)
         var foodArr = [];
         foodPhotosArr = []
         var score = 0;

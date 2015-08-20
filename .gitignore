@@ -1,9 +1,3 @@
+.env
 node_modules
 .DS_Store
-.env
-brenden.txt
-elle.txt
-osama.txt
-sam.txt
-README.md
-npm-debug.log

@@ -301,8 +301,8 @@ app.get("/search", function(req, res) {
               apartmentInfo: apartmentInfo
             };
           console.log('step 2')
-          res.send(yelpZillowObj);
-          // callback(null, yelpZillowObj);
+          // res.send(yelpZillowObj);
+          callback(null, yelpZillowObj);
             // res.send(apartmentInfo)
           })
         })

@@ -439,8 +439,8 @@ app.get("/search", function(req, res) {
     }
   ], function(err,results){
 
-    res.send(results)
-    //res.render('main/results', {results:results, apikey:parseInt(ws_api_key)})
+    //res.send(results)
+    res.render('main/results', {results:results, apikey:parseInt(ws_api_key)})
 
   })
 });

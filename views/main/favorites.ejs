@@ -10,7 +10,7 @@
 
             <% favorites.forEach(function(result){ %>
              <div class="well col-md-4 favorite" style="background-image:url('<%= result.mainImage  %>')">
-              <h4 class="fav-address"><%= result.address %>
+              <h4 class="fav-address"><a href="http://localhost:3000/search?address=<%= result.address %> &zip_code=<%= result.zipcode %>"><%= result.address %></a>
               <!-- <img src="<%= result.mainImage  %>"> -->
               <% for (var i=0; i<result.rating; i++){  %><img src="../img/z-star.png" class="star-small pull-right">
              <% } %>

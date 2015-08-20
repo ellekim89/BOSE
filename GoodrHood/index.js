@@ -181,7 +181,6 @@ app.post("/favorites", function(req,res){
 
 app.get("/", function(req, res){
   res.render("main/index")
-
 })
 
 app.get("/search", function(req, res) {
@@ -193,39 +192,58 @@ app.get("/search", function(req, res) {
       };
       var zillowAddressCall = zillow.callApi('GetSearchResults', params);
       zillowAddressCall.then(function(data){
+        // console.log(data)
+        // res.send(data)
         var zpid = parseInt(data.response[0].results[0].result[0].zpid[0])
         var id = {zpid: zpid}
-
+        var zData = data.response[0].results[0].result[0]
         var zillowIdCall = zillow.callApi('GetUpdatedPropertyDetails', id)
         zillowIdCall.then(function(result){
+          // res.send(result)
           if (result.message[0].code == '501'){
-              res.send("We're sorry. Unfortunately, this information is protected")
-          } else {
-            var zillowResult = result.response[0];
+            res.send("We're sorry. Unfortunately, this information is protected")
+          } else if(result.message[0].code == '508') {
+            res.send(result.message[0].text)
+          } else if(result.message[0].code == '502'){
+            console.log('we are here 502')
             var zillowObj = {
-              address: zillowResult.address[0].street+" "+zillowResult.address[0].city+" "+zillowResult.address[0].state,
-              images: zillowResult.images[0].image[0],
-              lat: zillowResult.address[0].latitude[0],
-              lon: zillowResult.address[0].longitude[0],
-              zipcode: zillowResult.address[0].zipcode[0]
-
+              address: zData.address[0].street[0],
+              lat: zData.address[0].latitude[0],
+              lon: zData.address[0].longitude[0],
+              zipcode: zData.address[0].zipcode[0],
+              neighborhood: zData.localRealEstate[0].region[0].$.name
             }
             console.log('step 1')
             callback(null, zillowObj)
+          } else {
+            console.log("we are here 0")
+            var zillowResult = result.response[0];
+            var zillowObj = {
+              address: zillowResult.address[0].street[0],
+              images: zillowResult.images[0].image[0].url,
+              lat: zillowResult.address[0].latitude[0],
+              lon: zillowResult.address[0].longitude[0],
+              zipcode: zillowResult.address[0].zipcode[0],
+              neighborhood: zData.localRealEstate[0].region[0].$.name
+            }
+            // res.send(zillowObj)
+            console.log('step 1')
+            callback(null, zillowObj)
           }
-          // console.log(zillowObj)
         })
       })
     },
     function(zillowObj, callback){
+      // res.send(zillowObj)
       yelp.search({term: "food", location: req.query.zip_code}, function(error, data) {
         var foodArr = [];
         foodPhotosArr = []
         var score = 0;
-        //res.send(data)
         data.businesses.forEach(function(place){
           foodArr.push(place.rating);
-          foodPhotosArr.push(place.image_url.replace("ms.jpg","l.jpg"))
+          if(place.image_url != null){
+            foodPhotosArr.push(place.image_url.replace("ms.jpg","l.jpg"))
+          }
         })
         for (var i = 0; i < foodArr.length; i++) {
           score = foodArr[i]+score;
@@ -233,14 +251,19 @@ app.get("/search", function(req, res) {
         score = score / foodArr.length;
         var foodRate = score
         var foodScore = Math.round(score*50);
-        yelp.search({term: req.body.address, location: req.query.zip_code}, function(error, data) {
+        yelp.search({term: "entertainment", location: req.query.zip_code}, function(error, data) {
+          // res.send(data)
           var ratingsArr = [];
           var photosArr = [];
           var score = 0;
+          // res.send(data)
           data.businesses.forEach(function(place){
             ratingsArr.push(place.rating);
-            photosArr.push(place.image_url.replace("ms.jpg","l.jpg"))
+            if(place.image_url != null){
+              photosArr.push(place.image_url.replace("ms.jpg","l.jpg"))
+            }
           })
+          // res.send(photosArr)
           for (var i = 0; i < ratingsArr.length; i++) {
             score = ratingsArr[i]+score;
           };
@@ -253,7 +276,6 @@ app.get("/search", function(req, res) {
               yelpEntertainmentRating: entertainmentRate,
               yelpFoodScore:foodScore,
               yelpEntertainmentScore: entertainmentScore,
-              neighborhood: data.businesses[0].location.neighborhoods[0],
               foodPhotos: foodPhotosArr,
               photos: photosArr
             };
@@ -264,13 +286,17 @@ app.get("/search", function(req, res) {
       })
     },
     function(yelpZillowObj, callback){
-      console.log(yelpZillowObj.neighborhood)
-      var neighborhood = yelpZillowObj.neighborhood.toLowerCase();
+      console.log(yelpZillowObj.zillow.neighborhood)
+      var neighborhood = yelpZillowObj.zillow.neighborhood.toLowerCase().replace("north " || "east " || "south " || "west ", "");
       console.log(neighborhood)
-      if(yelpZillowObj.neighborhood == "Downtown"){
-      var url = 'http://www.visitseattle.org/neighborhoods/'+neighborhood+'-seattle'
+      if(neighborhood.indexOf("downtown") != -1){
+        var url = 'http://www.visitseattle.org/neighborhoods/downtown-seattle'
+      } else if(neighborhood.indexOf( "beacon hill" || "genesee") != -1 ){
+        var url = 'http://www.visitseattle.org/neighborhoods/columbia-city/'
+      } else if(neighborhood.indexOf('first hill') != -1) {
+        var url = 'http://www.visitseattle.org/neighborhoods/capitol-hill/'
       }else{
-      var url = 'http://www.visitseattle.org/neighborhoods/'+neighborhood.split(' ').join('-')
+        var url = 'http://www.visitseattle.org/neighborhoods/'+neighborhood.split(' ').join('-')
       };
       console.log(url)
       request(url, function (error, response, data) {
@@ -304,17 +330,14 @@ app.get("/search", function(req, res) {
                   info:requestObj,
                   images:result,
                 }
-                // console.log(result);
-                // res.send(finalObj)
                 console.log('step 4')
                 callback(null, finalObj)
               }
             });
         }
-  })
+      })
     },
     function(finalObj, callback){
-      // res.send(finalObj)
       var url = 'http://api.walkscore.com/score?format=json&address='+finalObj.info.yelpZillow.zillow.address.split(' ').join('%20')+'&lat='+parseFloat(finalObj.info.yelpZillow.zillow.lat)+'&lon='+parseFloat(finalObj.info.yelpZillow.zillow.lon)+'&wsapikey='+wsapikey;
       request(url, function(err, response, data){
         if(data){

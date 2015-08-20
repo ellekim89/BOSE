@@ -101,7 +101,7 @@ var transporter = nodemailer.createTransport({
   }
 });
 transporter.sendMail({
-  from:'req.body.name <bloxscore@gmail.com>',
+  from:'bloxscore@gmail.com',
   to:'osamaasaid@gmail.com',
   subject:req.body.subject,
   text:req.body.message
@@ -109,12 +109,15 @@ transporter.sendMail({
 //   console.log('err',err);
 //   console.log('info',info);
 
-  res.redirect('main/thanks')
+  res.redirect('/thanks')
 
   });
 
 });
 
+app.get('/thanks', function(req,res){
+  res.render('main/thanks')
+})
 
 
 

@@ -30,9 +30,9 @@ margin-top: 50px;
 .search {
   margin-top: 10px;
   width: 200px;
-  -moz-box-shadow:    3px 3px 1px 1px #272727;
-  -webkit-box-shadow: 3px 3px 1px 1px #272727;
-  box-shadow:         3px 3px 1px 1px #272727;
+  -moz-box-shadow:    3px 3px 1px 1px rgba(0,0,0,0.5);
+  -webkit-box-shadow: 3px 3px 1px 1px rgba(0,0,0,0.5);
+  box-shadow:         3px 3px 1px 1px rgba(0,0,0,0.5);
 }
 
 ul .actions {
@@ -154,8 +154,7 @@ ul .actions {
   position: absolute;
   background-color: #F2F2F2;
   width: 100%;
-  height: 1.8em;
-  /*opacity: 0.5;*/
+  height: 2.5%;
   border-bottom: solid black 1px
 }
 
@@ -163,7 +162,6 @@ ul .actions {
   position: absolute;
   margin-top: 692px;
   background-color: #F2F2F2;
-  /*background-color: black;*/
   width: 100%;
   height: 40%;
   border-top: solid black 1px;

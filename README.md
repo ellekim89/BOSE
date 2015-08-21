@@ -1,5 +1,8 @@
 # BOSE
 
+##Elevator Pitch
+	BloxScore is a data aggregation service providing apartment searchers a snapshot of their community enabling them to make informed decisions on where they want to call home.
+
 ## Technologies Used
 - node.js
 - html
@@ -38,7 +41,7 @@
 - The Smiths are moving to Seattle from Ohio because Dad Smith got a job at Zillow. Mom Smith wants a place where there are good schools for her children. She doesn't want a place too close to the city so her children aren't tempted to play hooky but also not too far so that her husband doesn't have to commute for too long.
 
 ##Wireframes
-- soon to come in the images folder.
+- https://github.com/ellekim89/BOSE/tree/master/wireframes
 
 ##Unsolved Problems/Major Hurdles
 - One of our biggest hurdles was getting data from ALL of our APIs. but Sam was AMAZING and brilliantly wrote an async waterfall code. * cue music Waterfalls by TLC *

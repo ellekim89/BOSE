@@ -21,6 +21,8 @@
           <% var score = ((placesScore * 3.33) + (proximityScore * 3.34) + (priceScore * 3.33))%>
 
       <div class="score">
+
+
         <form method="post" action="/favorites">
           <input type="hidden" name="address" value="<%= results.main.info.yelpZillow.zillow.address %>">
           <input type="hidden" name="zipcode" value="<%= results.main.info.yelpZillow.zillow.zipcode %>">
@@ -39,6 +41,7 @@
 
          <button class="glyphicon glyphicon-heart btn btn-success pull-right"></button>
         </form>
+
         <% if(noApartments){ %>
         <h3><%= results.main.info.yelpZillow.zillow.neighborhood %></h3>
         <% } else { %>

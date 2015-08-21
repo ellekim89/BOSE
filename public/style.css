@@ -35,9 +35,9 @@ margin-top: 50px;
 .search {
   margin-top: 10px;
   width: 200px;
-  -moz-box-shadow:    3px 3px 1px 1px rgba(0,0,0,0.5);
-  -webkit-box-shadow: 3px 3px 1px 1px rgba(0,0,0,0.5);
-  box-shadow:         3px 3px 1px 1px rgba(0,0,0,0.5);
+  -moz-box-shadow:    0px 0px 5px 2px rgba(0,0,0,0.5);
+  -webkit-box-shadow: 0px 0px 5px 2px rgba(0,0,0,0.5);
+  box-shadow:         0px 0px 5px 2px rgba(0,0,0,0.5);
 }
 
 ul .actions {
@@ -64,13 +64,13 @@ ul .actions {
   max-height: 400px;
   /*margin-left:25%;*/
   color:#30C967;
-  background-color: #F2F2F2;
+  background-color: #F6F6F6;
 }
 .section  {
   width: 100%;
   height: 300px;
   color:black;
-  background-color: #F2F2F2;
+  background-color: #F6F6F6;
   text-align: left;
   float: right;
   width: 100%;
@@ -125,8 +125,14 @@ ul .actions {
   width:20px;
 }
 /*progress bar*/
+.progress-bar{
+  background-color: #37A2A9;
+
+}
+
 .progress{
-  /*margin-top: 50px;*/
+  box-shadow: 0 0 10px 1px rgba(0,0,0,0.2);
+  background-color: #B4B4B4;
 }
 
 
@@ -172,7 +178,7 @@ ul .actions {
 
 .hider-header{
   position: absolute;
-  background-color: #F2F2F2;
+  background-color: #F6F6F6;
   width: 100%;
   height: 2.5%;
   border-bottom: solid black 1px
@@ -181,7 +187,7 @@ ul .actions {
 .hider-ad-bar{
   position: absolute;
   margin-top: 692px;
-  background-color: #F2F2F2;
+  background-color: #F6F6F6;
   width: 100%;
   height: 40%;
   border-top: solid black 1px;
@@ -208,11 +214,31 @@ ul .actions {
     color:#b14900
 }
 
+#page-wrapper > div > div.side-bar.col-md-8.results > div.section.overview.col-md-12 > div > h2{
+  color:#37A2A9;
+  font-size: 50px;
+  /*font-family: impact;*/
+}
+.logoblue{
+  background-color:#37A2A9;
 
+}
+.textblue{
+  color:#37A2A9;
+
+}
+.gray{
+  color: gray;
+
+}
+.lightgray{
+  color: rgba(0,0,0,0.2);
+  text-shadow: 0 0 2px rgba(0,0,0,0.2);
+}
 .logo{
-  width: 12em;
+  width: 11em;
   height: auto;
-  /*margin-top: 3%;*/
+  margin-top: 1.5%;
   /*position: absolute;*/
 }
 
@@ -221,6 +247,10 @@ ul .actions {
   top: 10px;
   width: 100%;
   height: 200px;
+}
+
+.map-result{
+background-color: transparent;
 
 }
 /* End map CSS */
@@ -286,6 +316,17 @@ ul .actions {
 
 }
 
+h2{
+  font-family: 'Abel', sans-serif;
 
+
+}
+h3{
+  font-family: 'Abel', sans-serif;
+}
+.alt{
+  box-shadow: 0 0 20px 10px #333333;
+
+}
 
 

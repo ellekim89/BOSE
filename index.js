@@ -51,7 +51,7 @@ instagram.use({
 //   client_secret: client_secret
 // });
 app.use(function(req,res,next){
-  //req.session.user = 1;
+  req.session.user = 3;
   if(req.session.user){
     db.user.findById(req.session.user).then(function(user){
       req.currentUser = user;
@@ -334,7 +334,7 @@ app.get("/search", function(req, res) {
         };
         score = score / foodArr.length;
         var foodRate = score
-        var foodScore = Math.round(score*50);
+        var foodScore = Math.round(score*4);
         yelp.search({term: 'entertainment', location: zillowObj.address+" "+zillowObj.zipcode}, function(error, data) {
           // res.send(data)
           var ratingsArr = [];
@@ -353,7 +353,7 @@ app.get("/search", function(req, res) {
           };
           score = score / ratingsArr.length;
           var entertainmentRate = score
-          var entertainmentScore = Math.round(score*50);
+          var entertainmentScore = Math.round(score*4);
           yelp.search({term: 'apartments', location: zillowObj.address+" "+zillowObj.zipcode}, function(error, data){
             // res.send(data.businesses)
             var apartmentInfo = []

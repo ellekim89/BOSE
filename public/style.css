@@ -241,6 +241,11 @@ ul .actions {
   margin-top: 4%;
   /*position: absolute;*/
 }
+.snippet{
+  overflow: scroll;
+    height: 100px;
+}
+
 
 .map-box{
   position: absolute;

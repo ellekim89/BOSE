@@ -12,7 +12,7 @@
              <div class="well col-md-4 favorite" style="background-image:url('<%= result.mainImage  %>')">
               <a href="/<%= currentUser.id %>/favorites/<%= result.id %>" class="btn-sm btn-danger glyphicon glyphicon-trash pull-right favorite-delete"></a>
               <h4 class="fav-address">
-              <a href="http://localhost:3000/search?address=<%= result.address %> &zip_code=<%= result.zipcode %>"><%= result.address %></a></h4>
+              <a href="https://bloxscore.herokuapp.com/search?address=<%= result.address %> &zip_code=<%= result.zipcode %>"><%= result.address %></a></h4>
               <!-- <img src="<%= result.mainImage  %>"> -->
               <input name="addressFavorites" value="<%= result.address %>" type="hidden">
               <% for (var i=0; i<result.rating; i++){  %><img src="../img/z-star.png" class="star-small pull-right">

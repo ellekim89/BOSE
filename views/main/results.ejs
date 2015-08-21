@@ -24,14 +24,16 @@
         <form method="post" action="/favorites">
           <input type="hidden" name="address" value="<%= results.main.info.yelpZillow.zillow.address %>">
           <input type="hidden" name="zipcode" value="<%= results.main.info.yelpZillow.zillow.zipcode %>">
-
+          <% if(typeof results.main.info.yelpZillow.zillow.images === "undefined"){ %>
+            <input type="hidden" name="mainImage" value="http://cliparts.co/cliparts/di9/X5z/di9X5z94T.png">
+          <% } else {  %>
           <input type="hidden" name="mainImage" value="<%= results.main.info.yelpZillow.zillow.images[0] %>">
-
+          <% } %>
           <% if(noApartments){ %>
-            <input type="hidden" name="rating" value="http://cliparts.co/cliparts/di9/X5z/di9X5z94T.png">
+            <input type="hidden" name="rating" value="<%= parseInt(results.main.info.yelpZillow.yelpEntertainmentRating) %>">
           <% } else {  %>
             <input type="hidden" name="rating" value="<%= parseInt(results.main.info.yelpZillow.apartmentInfo[0].apartmentRating) %>">
-          <% }  %>
+          <% } %>
 
          <button class="glyphicon glyphicon-heart btn btn-success pull-right"></button>
         </form>
@@ -44,12 +46,6 @@
           Score:
           <%= Math.round(score) %>
         </h2>
-
-         <!--  <div class="progress">
-
-              <span class="sr-only">1000 Complete</span>
-            </div>
-          </div> -->
           <div id="progressbar"></div>
           <input id='score' type='hidden' value="<% Math.floor(score/10) %>">
         <p>
@@ -73,12 +69,19 @@
         <div class="small panel panel-default">
         <h3 class="score-results social_score">Social</h3>
           <h2 class="display">
-          <% var count = 0  %>
-            <% results.main.images.forEach(function(likes){ %>
-                  <% count = likes.likes.count + count %>
-                  <% count = likes.comments.count + count %>
-          <% }); %>
-          <%= count  %></h2>
+          <% if(noApartments){ %>
+            <% var count = 0  %>
+              <% count = Math.round((count + results.main.info.yelpZillow.yelpFoodRating + results.main.info.yelpZillow.yelpEntertainmentRating)*3+21.123412561) %>
+            <%= count  %>
+          <% } else {  %>
+            <% var count = 0  %>
+              <% results.main.images.forEach(function(likes){ %>
+                    <% count = likes.likes.count + count %>
+                    <% count = likes.comments.count + count %>
+            <% }); %>
+            <%= count  %>
+          <% } %>
+          </h2>
         </div>
       </div>
       <div class="col-md-3">
@@ -102,8 +105,10 @@
     <div class="well">
 
     <% if(noApartments){ %>
-      <h2>Community Ratings: <%= results.main.info.yelpZillow.yelpFoodRating %>
-
+      <h2>Community Ratings:
+        <% for (var i=1; i<results.main.info.yelpZillow.yelpFoodRating; i++){ %>
+          <img src="../img/z-star.png" class="star">
+        <% } %>
 
     <%  } else {  %>
       <h2>Community Ratings: <%= results.main.info.yelpZillow.apartmentInfo[0].apartmentRating %>

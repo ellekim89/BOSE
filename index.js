@@ -382,6 +382,8 @@ app.get("/search", function(req, res) {
         var url = 'http://www.visitseattle.org/neighborhoods/downtown-seattle'
       } else if(neighborhood.indexOf("genesee") != -1 ){
         var url = 'http://www.visitseattle.org/neighborhoods/columbia-city/'
+      } else if(neighborhood.indexOf("beacon hill") != -1 ){
+        var url = 'http://www.visitseattle.org/neighborhoods/columbia-city/'
       } else if(neighborhood.indexOf('first hill') != -1) {
         var url = 'http://www.visitseattle.org/neighborhoods/capitol-hill/'
       }else{
@@ -444,7 +446,7 @@ app.get("/search", function(req, res) {
   ], function(err,results){
 
 
-    //res.send(results)
+    // res.send(results)
 
     res.render('main/results', {results:results, apikey:parseInt(ws_api_key)})
 

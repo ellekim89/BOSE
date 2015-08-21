@@ -243,7 +243,7 @@ ul .actions {
 }
 .snippet{
   overflow: scroll;
-    height: 100px;
+  height: 100px;
 }
 
 
@@ -332,6 +332,10 @@ h3{
 .alt{
   box-shadow: 0 0 20px 10px #333333;
 
+}
+
+.flash-margin{
+  margin-top: 10px;
 }
 
 

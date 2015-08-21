@@ -393,12 +393,38 @@ app.get("/search", function(req, res) {
         var url = 'http://www.visitseattle.org/neighborhoods/downtown-seattle'
       } else if(neighborhood.indexOf("genesee") != -1 ){
         var url = 'http://www.visitseattle.org/neighborhoods/columbia-city/'
-      } else if(neighborhood.indexOf("beacon hill") != -1 ){
+      } else if(neighborhood.indexOf("university district") != -1 ){
+        var url = 'http://www.visitseattle.org/neighborhoods/university-district/'
+      } else if(neighborhood.indexOf("waterfront") != -1 ){
+        var url = 'http://www.visitseattle.org/neighborhoods/waterfront/'
+      } else if(neighborhood.indexOf("beacon") != -1 ){
         var url = 'http://www.visitseattle.org/neighborhoods/columbia-city/'
-      } else if(neighborhood.indexOf('first hill') != -1) {
+      } else if(neighborhood.indexOf("seattle") != -1 ){
+        var url = 'http://www.visitseattle.org/neighborhoods/west-seattle/'
+      } else if(neighborhood.indexOf('first') != -1) {
         var url = 'http://www.visitseattle.org/neighborhoods/capitol-hill/'
+      } else if(neighborhood.indexOf('belltown') != -1) {
+        var url = 'http://www.visitseattle.org/neighborhoods/belltown/'
+      } else if(neighborhood.indexOf('ballard') != -1) {
+        var url = 'http://www.visitseattle.org/neighborhoods/ballard/'
+      } else if(neighborhood.indexOf('fremont') != -1) {
+        var url = 'http://www.visitseattle.org/neighborhoods/fremont/'
+      } else if(neighborhood.indexOf('international') != -1) {
+        var url = 'http://www.visitseattle.org/neighborhoods/international-district/'
+      } else if(neighborhood.indexOf('queen anne') != -1) {
+        var url = 'http://www.visitseattle.org/neighborhoods/queen-anne/'
+      } else if(neighborhood.indexOf('union') != -1) {
+        var url = 'http://www.visitseattle.org/neighborhoods/south-lake-union/'
+      } else if(neighborhood.indexOf('pioneer') != -1) {
+        var url = 'http://www.visitseattle.org/neighborhoods/pioneer-square/'
+      } else if(neighborhood.indexOf('wallingford') != -1) {
+        var url = 'http://www.visitseattle.org/neighborhoods/university-district/'
+      } else if(neighborhood.indexOf('greenlake') != -1) {
+        var url = 'http://www.visitseattle.org/neighborhoods/greenlake/'
       }else{
-        var url = 'http://www.visitseattle.org/neighborhoods/'+neighborhood.split(' ').join('-')
+        var url = 'http://www.visitseattle.org/neighborhoods/downtown-seattle/'
+        // var url = 'http://www.visitseattle.org/neighborhoods/'+neighborhood.split(' ').join('-')
+
       };
       console.log(url)
       request(url, function (error, response, data) {
@@ -423,6 +449,7 @@ app.get("/search", function(req, res) {
         if (err) {
           res.send(err+"no sam");
         } else {
+          // res.send(result)
             var id = result[2].id;
             instagram.location_media_recent(id, function(err, result){
               if (err) {

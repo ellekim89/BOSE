@@ -1,7 +1,7 @@
 # BOSE
 
 ##Elevator Pitch
-	BloxScore is a data aggregation service providing apartment searchers a snapshot of their community enabling them to make informed decisions on where they want to call home.
+- BloxScore is a data aggregation service providing apartment searchers a snapshot of their community enabling them to make informed decisions on where they want to call home.
 
 ## Technologies Used
 - node.js

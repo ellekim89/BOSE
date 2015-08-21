@@ -39,20 +39,30 @@
           <% } %>
 
 
-         <button class="glyphicon glyphicon-heart btn btn-success pull-right"></button>
+         <button class="glyphicon logoblue glyphicon-heart btn btn-info pull-right"></button>
         </form>
 
         <% if(noApartments){ %>
-        <h3><%= results.main.info.yelpZillow.zillow.neighborhood %></h3>
+        <h3 class="lightgray"><%= results.main.info.yelpZillow.zillow.neighborhood %></h3>
         <% } else { %>
-        <h3><%= results.main.info.yelpZillow.apartmentInfo[0].apartmentName %></h3>
+        <h3 class="lightgray"><%= results.main.info.yelpZillow.apartmentInfo[0].apartmentName %></h3>
         <% }  %>
         <h2>
-          Score:
+          <t class="gray">Blox</t>Score:
           <%= Math.round(score) %>
+          <% if(score > 800){  %>
+          <i class="icon minor fa-thumbs-up"></i>
+          <% } else { %>
+          <i class="icon minor fa-thumbs-down"></i>
+          <% }  %>
         </h2>
-          <div id="progressbar"></div>
-          <input id='score' type='hidden' value="<% Math.floor(score/10) %>">
+        <div class="progress">
+          <div class="progress-bar" role="progressbar" aria-valuenow="<% Math.floor(score/10) %>"
+          aria-valuemin="0" aria-valuemax="100" style="width:70%;">BloxScore: <%= Math.floor(score) %>
+            <span class="sr-only">70% Complete</span>
+          </div>
+        </div>
+
         <p>
           <%= results.main.info.community_snippet %>
         </p>
@@ -110,13 +120,14 @@
     <div class="well">
 
     <% if(noApartments){ %>
-      <h2>Community Ratings:
+
+      <h2>Community <t class="textblue">Ratings</t>:
         <% for (var i=1; i<results.main.info.yelpZillow.yelpFoodRating; i++){ %>
           <img src="../img/z-star.png" class="star">
         <% } %>
 
     <%  } else {  %>
-      <h2>Community Ratings: <%= results.main.info.yelpZillow.apartmentInfo[0].apartmentRating %>
+      <h2>Community <t class="textblue">Ratings</t>: <%= results.main.info.yelpZillow.apartmentInfo[0].apartmentRating %>
         <% for (var i=1; i<results.main.info.yelpZillow.apartmentInfo[0].apartmentRating; i++){ %>
           <img src="../img/z-star.png" class="star">
         <% } %>
@@ -134,7 +145,7 @@
 
 <!-- INSTAGRAM PHOTOS -->
     <div class="well photo-results">
-    <h2>People Nearby</h2>
+    <h2><i class="icon minor fa-users"></i> People <t class="textblue">Nearby</t></h2>
     <% if(results.main.images.length < 1){ %>
     <img src="http://www.clipartbest.com/cliparts/ncB/XBX/ncBXBXgBi.png"><p>No Community photos for <%= results.main.info.yelpZillow.zillow.address  %>, check back soon!</p>
     <% } else { %>
@@ -145,14 +156,14 @@
     </div>
 <!-- YELP PHOTOS -->
     <div class="well photo-results">
-    <h2>Entertainment Nearby</h2>
+    <h2><i class="icon minor fa-usd"></i> Entertainment <t class="textblue">Nearby</t></h2>
     <% results.main.info.yelpZillow.foodPhotos.forEach(function(image){ %>
       <img src="<%= image  %>">
       <% }) %>
     </div>
 <!-- Home Photos -->
     <div class="well photo-results">
-    <h2>Home Photos</h2>
+    <h2><i class="icon minor fa-home"></i> Home <t class="textblue">Photos</t></h2>
     <% if(typeof results.main.info.yelpZillow.zillow.images == "undefined"){ %>
       <img src="http://cliparts.co/cliparts/di9/X5z/di9X5z94T.png"><p>No Location photos for <%= results.main.info.yelpZillow.zillow.address  %>, check back soon!</p>
     <% } else { %>

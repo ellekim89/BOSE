@@ -12,6 +12,20 @@ $( window ).load(function() {
     $('.logout_nav').hide();
   }
 
+   $('.favorite-delete').click(function(e) {
+    e.preventDefault();
+    var button = $(this);
+    console.log(button.attr('href'));
+    $.ajax({
+      url: button.attr("href"),
+      method: "DELETE"
+    }).done(function(data) {
+      if (data.msg === "OK")
+        button.parent().remove();
+    });
+  });
+
+
   // $('#nav .favorites').length > 0
   console.log(currentUser);
 

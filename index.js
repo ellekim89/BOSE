@@ -451,6 +451,19 @@ app.get("/search", function(req, res) {
   })
 });
 
+app.delete("/:user_id/favorites/:id", function(req, res) {
+  db.favorite.findById(parseInt(req.params.id)).then(function(favorite) {
+    favorite.destroy().then(function() {
+      res.send({msg: "OK"});
+    }).catch(function(error) {
+      res.send({msg: "ERROR"});
+    });
+  }).catch(function(error) {
+    res.send({msg: "ERROR"});
+  });
+});
+
+
 app.get('/logout',function(req,res){
   req.flash('info','You have been logged out.');
   req.session.user = false;

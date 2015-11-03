@@ -144,7 +144,7 @@ app.get("/signup", function(req,res){
 app.post("/signup", function(req, res){
     if(req.body.password != req.body.password2){
     req.flash('danger','Passwords must match.')
-    res.redirect('/auth/signup');
+    res.redirect('/signup');
   }else{
     db.user.findOrCreate({
       where:{
@@ -164,7 +164,7 @@ app.post("/signup", function(req, res){
         // throw new Error('A user with that e-mail address already exists.');
         // res.send('A user with that e-mail address already exists.');
         req.flash('danger','A user with that e-mail address already exists.');
-        res.redirect('/auth/signup');
+        res.redirect('/signup');
       }
     }).catch(function(err){
       if(err.message){
@@ -173,7 +173,7 @@ app.post("/signup", function(req, res){
         req.flash('danger','unknown error.');
         console.log(err);
       }
-      res.redirect('/auth/signup');
+      res.redirect('/signup');
     })
   }
 })
@@ -194,7 +194,7 @@ app.post('/login', function(req, res){
       res.redirect('/');
     }else{
       req.flash('danger','invalid username or password');
-      res.redirect('/auth/login');
+      res.redirect('/login');
     }
   });
 })

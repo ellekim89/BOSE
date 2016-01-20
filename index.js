@@ -28,9 +28,6 @@ var nodemailer = require('nodemailer');
 
 
 
-
-
-
 app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(methodOverride('_method'))
@@ -46,10 +43,7 @@ app.use(flash());
 instagram.use({
   access_token: access_token
 });
-// instagram.use({
-//   client_id: client_id,
-//   client_secret: client_secret
-// });
+
 app.use(function(req,res,next){
   // req.session.user = 3;
   if(req.session.user){
@@ -77,44 +71,38 @@ app.use(function(req,res,next){
   next();
 });
 
+
+
+//EMAIL
 app.get("/contact", function(req, res){
   res.render('main/contact');
 });
 
-
-//email
-
 app.post('/contact', function (req, res) {
-  // res.send(req.body);
-//   var mailBody = "";
-//   for(key in req.body){
-//     mailBody += key + ':\t' + req.body[key] + '\n\n';
-//   }
-//   res.send(mailBody);
 
-var transporter = nodemailer.createTransport({
-  service: 'gmail',
-  auth: {
-    user: process.env.GMAIL_EMAIL,
-    pass: process.env.GMAIL_PASSWORD
-  }
-});
-transporter.sendMail({
-  from:'bloxscore@gmail.com',
-  to:'osamaasaid@gmail.com',
-  subject:req.body.subject,
-  text:req.body.message
-},function(err,info){
+  var transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+      user: process.env.GMAIL_EMAIL,
+      pass: process.env.GMAIL_PASSWORD
+    }
+  });
+  transporter.sendMail({
+    from:'bloxscore@gmail.com',
+    to:'osamaasaid@gmail.com',
+    subject:req.body.subject,
+    text:req.body.message
+  },function(err,info){
 //   console.log('err',err);
 //   console.log('info',info);
-  if (!req.body.message){
-    req.flash("danger","Message can't be empty.");
-    res.redirect('/contact')
-  }
-  else{
-    res.redirect('/thanks')
-  }
-  });
+    if (!req.body.message){
+      req.flash("danger","Message can't be empty.");
+      res.redirect('/contact')
+    }
+    else{
+      res.redirect('/thanks')
+    }
+    });
 
 });
 
@@ -122,21 +110,16 @@ app.get('/thanks', function(req,res){
   res.render('main/thanks')
 })
 
+///END EMAIL
 
 
-///end email
-
-
-
-
-
-
-
+//TEAM PAGE
 app.get("/team", function(req, res){
   res.render('main/team');
 });
 
 
+//SIGNUP
 app.get("/signup", function(req,res){
   res.render('main/signup');
 });
@@ -177,8 +160,11 @@ app.post("/signup", function(req, res){
     })
   }
 })
+//END SIGNUP
 
 
+
+//LOGIN
 app.get("/login", function(req,res){
     res.render('main/login');
 });
@@ -198,29 +184,31 @@ app.post('/login', function(req, res){
     }
   });
 })
+// END LOGIN
+
+//LOGOUT
+app.get('/logout',function(req,res){
+  req.flash('info','You have been logged out.');
+  req.session.user = false;
+  res.redirect('/');
+});
+//END LOGOUT
+
 
 // FAVORITES
-// GET Favorites localhost:3000/favorites
 app.get("/:id/favorites", function(req, res){
-
-  // res.send('working');
   db.user.find({
     where: {id:req.params.id}, include:[db.favorite]
   }).then(function(favorite){
       res.render('main/favorites',favorite.get())
-      // res.send(favorite)
   }).catch(function(err){
     res.send(err);
   })
-  //   res.render('main/favorites', {myfavorite: favorite});
-  // });
-  //res.render('main/favorites');
 
 });
 
 // POST favorites
 app.post("/favorites", function(req,res){
-  // res.send(req.body);
     db.favorite.findOrCreate({
       where:{user_id: req.currentUser.id,
              address: req.body.address,
@@ -231,20 +219,20 @@ app.post("/favorites", function(req,res){
   });
 });
 
+//DELETE FAVORITE
+app.delete("/:user_id/favorites/:id", function(req, res) {
+  db.favorite.findById(parseInt(req.params.id)).then(function(favorite) {
+    favorite.destroy().then(function() {
+      res.send({msg: "OK"});
+    }).catch(function(error) {
+      res.send({msg: "ERROR"});
+    });
+  }).catch(function(error) {
+    res.send({msg: "ERROR"});
+  });
+});
 
-
-// FAVORITES BEGINS HERE
-
-// GET http://localhost:3000/favorites
-// app.get('/favorites',function(req,res){
-//   db.favorite.findAll({
-//     include:[db.address],
-//     include:[db.zipcode]
-//   }).then(function(favorites){
-//     res.render('main/favorites',{favorites:favorites});
-//   });
-// });
-
+//END FAVORITES
 
 app.get("/", function(req, res){
   res.render("main/index")
@@ -491,32 +479,8 @@ app.get("/search", function(req, res) {
       res.render('main/results', {results:results, apikey:parseInt(ws_api_key)})
     }
     // res.send(results)
-
-
   })
 });
-
-app.delete("/:user_id/favorites/:id", function(req, res) {
-  db.favorite.findById(parseInt(req.params.id)).then(function(favorite) {
-    favorite.destroy().then(function() {
-      res.send({msg: "OK"});
-    }).catch(function(error) {
-      res.send({msg: "ERROR"});
-    });
-  }).catch(function(error) {
-    res.send({msg: "ERROR"});
-  });
-});
-
-
-app.get('/logout',function(req,res){
-  req.flash('info','You have been logged out.');
-  req.session.user = false;
-  res.redirect('/');
-});
-
-
-
 
 
 app.listen(process.env.PORT || 3000);
